@@ -1,0 +1,213 @@
+body {
+  &.colorWeak {
+    filter: invert(80%);
+  }
+}
+
+.layout {
+  .header,
+  .header-nav {
+    height: var(--el-header-height);
+  }
+
+  .header {
+    .user-wrapper {
+      .action {
+        color: #303133;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+  }
+
+  .header-nav {
+    .header-nav-wrap .logo h1 {
+      font-size: 16px;
+    }
+
+    &.light {
+      .header-nav-wrap {
+        .logo h1 {
+          color: #002140;
+        }
+      }
+
+      .user-wrapper {
+        .action {
+          color: #303133;
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.05);
+          }
+        }
+      }
+    }
+
+    &.dark {
+      background: #001529;
+      color: #fff;
+
+      .collapse:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .el-menu {
+        background: #001529;
+        .el-menu-item,
+        .el-sub-menu__title {
+          border: none;
+          color: #ffffffa6;
+        }
+
+        .is-active .el-sub-menu__title,
+        .el-sub-menu__title:hover,
+        .el-menu-item:not(.is-disabled):focus,
+        .el-menu-item:not(.is-disabled):hover {
+          border: none;
+          background-color: transparent;
+          color: #fff !important;
+        }
+
+        .el-menu-item:not(.is-disabled).is-active {
+          background-color: var(--el-menu-hover-text-color);
+          color: #fff !important;
+        }
+      }
+    }
+  }
+
+  // .logo {
+  //   height: var(--el-header-height);
+  // }
+
+  .collapse {
+    height: var(--el-header-height);
+  }
+
+  .el-menu {
+    height: var(--el-header-height);
+  }
+
+  // .menubar {
+  //   background: var(--el-color-primary);
+  //   .el-menu-item,
+  //   .el-sub-menu__title {
+  //     color: #fff;
+  //   }
+  //   .el-menu-item {
+  //     border: none;
+  //   }
+  //   .el-menu-item:not(.is-disabled).is-active,
+  //   .el-menu-item:not(.is-disabled):hover {
+  //     background-color: #fff;
+  //     border: none;
+  //     color: var(--el-menu-hover-text-color);
+  //   }
+  // }
+}
+
+.side {
+  &.light {
+    .logo {
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+      h1 {
+        color: #303133;
+      }
+    }
+  }
+
+  &.dark {
+    background: #001529;
+    box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
+    .el-menu {
+      background: #001529;
+      .el-menu-item,
+      .el-sub-menu__title {
+        color: #ffffffa6;
+      }
+
+      .is-active .el-sub-menu__title,
+      .el-sub-menu__title:hover,
+      .el-menu-item:not(.is-disabled):focus,
+      .el-menu-item:not(.is-disabled):hover {
+        background-color: transparent;
+        color: #fff;
+      }
+
+      .el-menu-item:not(.is-disabled).is-active {
+        background-color: var(--el-menu-hover-text-color);
+        color: #fff;
+      }
+
+      .el-menu--inline {
+        background: #000c17;
+      }
+    }
+  }
+
+  &.side-collapse {
+    .logo h1 {
+      color: transparent;
+    }
+  }
+}
+
+.drawer-sider {
+  &.dark {
+    background: #001529;
+  }
+  .el-drawer__body {
+    padding: 0;
+  }
+}
+
+// // 数据列表 样式
+// .table-alert {
+//   margin-bottom: 16px;
+// }
+
+// .table-page-search-wrapper {
+//   .ant-form-inline {
+//     .ant-form-item {
+//       display: flex;
+//       margin-bottom: 24px;
+//       margin-right: 0;
+
+//       .ant-form-item-control-wrapper {
+//         flex: 1 1;
+//         display: inline-block;
+//         vertical-align: middle;
+//       }
+
+//       > .ant-form-item-label {
+//         line-height: 32px;
+//         padding-right: 8px;
+//         width: auto;
+//       }
+//       .ant-form-item-control {
+//         height: 32px;
+//         line-height: 32px;
+//       }
+//     }
+//   }
+
+//   .table-page-search-submitButtons {
+//     display: block;
+//     margin-bottom: 24px;
+//     white-space: nowrap;
+//   }
+// }
+
+// .content {
+//   .table-operator {
+//     margin-bottom: 18px;
+
+//     button {
+//       margin-right: 8px;
+//     }
+//   }
+// }
