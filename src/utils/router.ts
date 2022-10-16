@@ -11,7 +11,7 @@ export function generateIndexRouter(menuList: Array<MenuType>) {
       component: (resolve: () => void) =>
         require(["@/components/layouts/BasicLayout"], resolve),
       redirect: "/home",
-      meta: { title: "首页" },
+      meta: { title: "首页", affix: true },
 
       children: [...generateChildRouters(data)],
     },

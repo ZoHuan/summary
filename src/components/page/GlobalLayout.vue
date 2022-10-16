@@ -5,7 +5,6 @@
         v-model="collapsed"
         :custom-class="'drawer-sider ' + theme"
         :with-header="false"
- 
         direction="ltr"
         size="256px"
         @close="() => (collapsed = false)"
@@ -35,6 +34,7 @@
       }"
     >
       <global-header :menus="menus" :collapsed="collapsed" @toggle="toggle" />
+      <global-tabs />
 
       <el-main :class="{ 'fixed-header': fixedHeader }">
         <slot></slot>
@@ -58,6 +58,7 @@ import type { MenuType } from "@/types/user";
 
 import GlobalHeader from "@/components/page/GlobalHeader.vue";
 import GlobalFooter from "@/components/page/GlobalFooter.vue";
+import GlobalTabs from "@/components/page/GlobalTabs.vue";
 import SideMenu from "@/components/menu/SideMenu.vue";
 
 const app = appStore();

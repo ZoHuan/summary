@@ -26,6 +26,7 @@ export interface MenuType {
   meta: MetaType;
   children?: Array<MenuType>;
 }
+
 export interface MetaType {
   icon: string;
   title: string;
@@ -61,4 +62,11 @@ export interface ActionEntitySetType {
   action: string;
   describe: string;
   defaultCheck: boolean;
+}
+
+export interface TagsType {
+  fullPath: string;
+  path: string;
+  name: RouteRecordName | undefined;
+  meta: RouteMeta;
 }
