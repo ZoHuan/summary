@@ -26,7 +26,35 @@ const userMenu = () => {
   const menu = [
     // dashboard
     {
-      name: "system",
+      name: "Home",
+      path: "/home",
+      parentId: 0,
+      id: 1,
+      component: "layouts/RouteView",
+      redirect: "/home/workplace",
+      meta: {
+        icon: "setting",
+        title: "首页",
+        hidden: false,
+      },
+      children: [
+        {
+          name: "Workplace",
+          path: "workplace",
+          parentId: 1,
+          id: 2,
+          component: "home/Workplace",
+          meta: {
+            icon: "user",
+            title: "工作台",
+            hidden: false,
+            affix: true,
+          },
+        },
+      ],
+    },
+    {
+      name: "System",
       path: "/system",
       parentId: 0,
       id: 1,
@@ -35,23 +63,23 @@ const userMenu = () => {
       meta: {
         icon: "setting",
         title: "系统管理",
-        show: true,
+        hidden: false,
       },
       children: [
         {
-          name: "department",
+          name: "Department",
           path: "department",
           parentId: 1,
           id: 2,
-          component: "DepartmentList",
+          component: "system/department/Department",
           meta: {
             icon: "user",
             title: "部门管理",
-            show: true,
+            hidden: false,
           },
         },
         {
-          name: "role",
+          name: "Role",
           path: "role",
           parentId: 1,
           id: 3,
@@ -59,11 +87,11 @@ const userMenu = () => {
           meta: {
             icon: "user",
             title: "角色管理",
-            show: true,
+            hidden: false,
           },
         },
         {
-          name: "user",
+          name: "User",
           path: "user",
           parentId: 1,
           id: 4,
@@ -71,11 +99,11 @@ const userMenu = () => {
           meta: {
             icon: "user",
             title: "用户管理",
-            show: true,
+            hidden: false,
           },
         },
         {
-          name: "menu",
+          name: "Menu",
           path: "menu",
           parentId: 1,
           id: 5,
@@ -83,13 +111,13 @@ const userMenu = () => {
           meta: {
             icon: "user",
             title: "菜单管理",
-            show: true,
+            hidden: false,
           },
         },
       ],
     },
     {
-      name: "account",
+      name: "Account",
       path: "/account",
       parentId: 0,
       id: 1,
@@ -98,7 +126,7 @@ const userMenu = () => {
       meta: {
         icon: "setting",
         title: "个人页",
-        show: true,
+        hidden: false,
       },
     },
   ];

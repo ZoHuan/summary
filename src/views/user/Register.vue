@@ -210,7 +210,7 @@ const handleRegister = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       registerBtn.value = true;
-      router.push({ name: "registerResult", params: { ...registerForm } });
+      router.push({ name: "RegisterResult", params: { ...registerForm } });
     }
   });
 };
@@ -310,7 +310,7 @@ const requestFailed = (err: AxiosError<ResponseType<ObjectType>>) => {
 };
 
 const jumpLogin = () => {
-  router.push({ name: "login" });
+  router.push({ name: "Login" });
 };
 </script>
 

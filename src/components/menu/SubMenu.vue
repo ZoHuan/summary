@@ -25,7 +25,7 @@ import { appStore } from "@/store/modules/app";
 import type { MenuType } from "@/types/user";
 
 const router = useRouter();
-const store = appStore();
+const app = appStore();
 
 defineProps<{
   menu: MenuType;
@@ -33,9 +33,9 @@ defineProps<{
 
 const jumpRoute = (menu: MenuType) => {
   if (menu.component === "layouts/RouteView") {
-    store.toggleTopMenu(menu.name);
+    app.toggleTopMenu(menu.name);
   } else {
-    router.push(menu.path);
+    router.push({ name: menu.name });
   }
 };
 </script>

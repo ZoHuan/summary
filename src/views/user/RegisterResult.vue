@@ -29,7 +29,7 @@ onMounted(() => {
 });
 
 const goHomeHandle = () => {
-  router.push({ name: "login" });
+  router.push({ name: "Login" });
 };
 </script>
 

@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
-import { BlankLayout } from "@/components/layouts";
+import { BlankLayout, BasicLayout } from "@/components/layouts";
 /**
  * 基础路由
  * @type { *[] }
@@ -13,19 +13,19 @@ export const constantRouterMap: Array<RouteRecordRaw> = [
     children: [
       {
         path: "login",
-        name: "login",
+        name: "Login",
         component: () =>
           import(/* webpackChunkName: "user" */ "@/views/user/Login.vue"),
       },
       {
         path: "register",
-        name: "register",
+        name: "Register",
         component: () =>
           import(/* webpackChunkName: "user" */ "@/views/user/Register.vue"),
       },
       {
         path: "register-result",
-        name: "registerResult",
+        name: "RegisterResult",
         component: () =>
           import(
             /* webpackChunkName: "user" */ "@/views/user/RegisterResult.vue"
@@ -34,15 +34,21 @@ export const constantRouterMap: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/redirect",
+    component: BasicLayout,
+    children: [
+      {
+        path: "/redirect/:pathMatch(.*)",
+        component: () =>
+          import(
+            /* webpackChunkName: "redirect" */ "@/views/redirect/Redirect.vue"
+          ),
+      },
+    ],
+  },
+  {
     path: "/404",
     component: () =>
       import(/* webpackChunkName: "fail" */ "@/views/exception/404.vue"),
-  },
-  {
-    path: "/home",
-    component: () =>
-      import(
-        /* webpackChunkName: "home" */ "@/components/layouts/BasicLayout.vue"
-      ),
   },
 ];

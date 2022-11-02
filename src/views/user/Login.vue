@@ -111,7 +111,7 @@ const loginRules = reactive<FormRules>({
 });
 
 const loginSuccess = () => {
-  router.push("/home");
+  router.push("/");
   isLoginError.value = false;
 };
 const requestFailed = (err: AxiosError<ResponseType<ObjectType>>) => {
@@ -142,7 +142,7 @@ const handleLogin = (formEl: FormInstance | undefined) => {
 };
 
 const jumpRegister = () => {
-  router.push({ name: "register" });
+  router.push({ name: "Register" });
 };
 </script>
 

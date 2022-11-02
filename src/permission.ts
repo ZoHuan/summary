@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
           })
           .catch(() => {
             user.logout().then(() => {
-              next({ path: "/user/login", query: { redirect: to.fullPath } });
+              next({ path: loginRoutePath, query: { redirect: to.fullPath } });
             });
           });
       } else {

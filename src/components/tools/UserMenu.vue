@@ -111,7 +111,7 @@ const handleLogout = () => {
     type: "warning",
   }).then(() => {
     return store.logout().then(() => {
-      router.push({ name: "login" });
+      router.push({ name: "Login" });
     });
   });
 };

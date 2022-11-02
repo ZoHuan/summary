@@ -7,18 +7,13 @@ export function generateIndexRouter(menuList: Array<MenuType>) {
   const indexRouter = [
     {
       path: "/",
-      name: "index",
-      component: (resolve: () => void) =>
-        require(["@/components/layouts/BasicLayout"], resolve),
+      component: () => import("@/components/layouts/BasicLayout.vue"),
       redirect: "/home",
-      meta: { title: "首页", affix: true },
-
       children: [...generateChildRouters(data)],
     },
     {
       path: "/:pathMatch(.*)",
       redirect: "/404",
-      meta: { hidden: true },
     },
   ];
   return indexRouter;
@@ -51,16 +46,7 @@ function generateChildRouters(menuList: Array<MenuType>) {
       name: item.name,
       redirect: item.redirect,
       component: () => import(`@/${component}.vue`),
-      meta: {
-        module: item.name,
-        title: item.meta.title,
-        icon: item.meta.icon,
-        hidden: item.meta.show,
-        url: item.meta.url,
-        keepAlive: item.meta.keepAlive,
-        permissionList: item.meta.permissionList,
-        internalOrExternal: item.meta.internalOrExternal,
-      },
+      meta: { ...item.meta },
     };
 
     if (item.children && item.children.length > 0) {
@@ -84,7 +70,7 @@ function generateChildRouters(menuList: Array<MenuType>) {
  */
 export function treeToList(list: Array<unknown>, tree: Array<MenuType>) {
   tree.forEach((item) => {
-    if (item.meta.show && item.component !== "layouts/RouteView") {
+    if (!item.meta.hidden && item.component !== "layouts/RouteView") {
       list.push(item);
     }
     if (item.children && item.children.length > 0) {

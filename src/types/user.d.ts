@@ -30,9 +30,10 @@ export interface MenuType {
 export interface MetaType {
   icon: string;
   title: string;
-  show: boolean;
+  hidden: boolean;
+  affix?: boolean;
+  noCache?: string;
   url?: string;
-  keepAlive?: string;
   permissionList?: string;
   internalOrExternal?: boolean;
 }
@@ -69,4 +70,11 @@ export interface TagsType {
   path: string;
   name: RouteRecordName | undefined;
   meta: RouteMeta;
+}
+
+export interface ContextMenuType {
+  icon: string;
+  text: string;
+  disabled: () => boolean;
+  select: () => void;
 }

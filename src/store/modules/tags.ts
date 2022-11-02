@@ -29,7 +29,6 @@ export const tagsStore = defineStore({
     // 新增tag
     addVisitedView(view: RouteLocationNormalizedLoaded) {
       if (this.visitedViews.some((v) => v.path === view.path)) return;
-      if (view.meta.noTagsView) return;
       this.visitedViews.push(
         Object.assign({}, view, {
           title: view.meta.title || "no-name",
@@ -117,6 +116,7 @@ export const tagsStore = defineStore({
         this.cachedViews = this.cachedViews.slice(0, index + 1);
       }
     },
+    // 更新tag
     updateVisitedView(view: RouteLocationNormalizedLoaded) {
       for (let v of this.visitedViews) {
         if (v.path === view.path) {
