@@ -16,7 +16,7 @@ const { start, done } = useNProgress();
 
 const whiteList = ["/user/login", "/user/register", "/user/register-result"]; // 不重定向白名单
 const loginRoutePath = "/user/login";
-const defaultRoutePath = "/home";
+const defaultRoutePath = "/";
 
 router.beforeEach((to, from, next) => {
   start();

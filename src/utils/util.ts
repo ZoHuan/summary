@@ -10,6 +10,7 @@ export function triggerWindowResizeEvent() {
   window.dispatchEvent(event);
 }
 
+// 密码难度评分
 export function scorePassword(pass: string) {
   let score = 0;
   if (!pass) {

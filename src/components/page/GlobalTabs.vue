@@ -379,8 +379,8 @@ const moveToTarget = (tag: RouteLocationNormalizedLoaded) => {
     }
 
     &.active {
-      border-color: #42b983;
-      background-color: #42b983;
+      border-color: var(--el-color-primary);
+      background-color: var(--el-color-primary);
       color: #fff;
     }
     &.no-affix {

@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 import { useCache } from "@/hooks/web/useCache";
 import {
-  TOGGLE_SIDEBAR,
   // TOGGLE_MOBILE_TYPE,
   TOGGLE_THEME,
   TOGGLE_LAYOUT,
+  TOGGLE_SIDEBAR,
   TOGGLE_MULTI_TAB,
   TOGGLE_CONTENT_WIDTH,
   TOGGLE_FIXED_HEADER,
   TOGGLE_FIXED_SIDEBAR,
-  TOGGLE_HIDE_HEADER,
+  TOGGLE_HEADER_HIDDEN,
   TOGGLE_COLOR,
   TOGGLE_WEAK,
   // APP_LANGUAGE,
@@ -20,26 +20,21 @@ const { storage } = useCache();
 export const appStore = defineStore({
   id: "app",
   state: () => ({
-    sidebar: true,
     device: "desktop", // 设备
     theme: "", // 主题
     layout: "", // layout布局
-    topMenu: "", // 顶部菜单
+    topMenu: "Home", // 顶部菜单
+    sidebar: true, // 侧边栏状态
     multiTab: true, // 默认多页签模式
-    contentWidth: "",
+    contentWidth: "", // 内容宽度
     fixedHeader: false, // 固定header
     fixSiderbar: false, // 固定Siderbar
-    autoHideHeader: false, // 自动隐藏header
-    color: "",
+    fixedHeaderHidden: false, // 自动隐藏header
+    color: "", // 主题色
     weak: false, // 色盲
   }),
 
   actions: {
-    toggleSidebar(flag: boolean) {
-      storage.set(TOGGLE_SIDEBAR, flag);
-      this.sidebar = flag;
-    },
-
     toggleDevice(device: string) {
       this.device = device;
     },
@@ -51,12 +46,16 @@ export const appStore = defineStore({
       storage.set(TOGGLE_LAYOUT, layout);
       this.layout = layout;
     },
-    toggleTopMenu(topMenu: string) {
-      this.topMenu = topMenu;
+    toggleTopMenu(menu: string) {
+      this.topMenu = menu;
     },
-    toggleMultiTab(multiTabFlag: boolean) {
-      storage.set(TOGGLE_MULTI_TAB, multiTabFlag);
-      this.multiTab = multiTabFlag;
+    toggleSidebar(flag: boolean) {
+      storage.set(TOGGLE_SIDEBAR, flag);
+      this.sidebar = flag;
+    },
+    toggleMultiTab(flag: boolean) {
+      storage.set(TOGGLE_MULTI_TAB, flag);
+      this.multiTab = flag;
     },
     toggleContentWidth(type: string) {
       storage.set(TOGGLE_CONTENT_WIDTH, type);
@@ -73,9 +72,9 @@ export const appStore = defineStore({
       storage.set(TOGGLE_FIXED_SIDEBAR, fixed);
       this.fixSiderbar = fixed;
     },
-    toggleFixedHeaderHidden(show: boolean) {
-      storage.set(TOGGLE_HIDE_HEADER, show);
-      this.autoHideHeader = show;
+    toggleFixedHeaderHidden(hidden: boolean) {
+      storage.set(TOGGLE_HEADER_HIDDEN, hidden);
+      this.fixedHeaderHidden = hidden;
     },
     toggleColor(color: string) {
       storage.set(TOGGLE_COLOR, color);

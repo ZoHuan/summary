@@ -12,15 +12,3 @@ body,
 a {
   text-decoration: none;
 }
-
-/* .el-button--primary {
-  --el-button-background-color: var(--el-color-primary) !important;
-  --el-button-border-color: var(--el-color-primary) !important;
-  --el-button-hover-color: var(--el-color-primary-light-2) !important;
-  --el-button-active-background-color: var(--el-color-primary) !important;
-  --el-button-active-border-color: var(--el-color-primary) !important;
-}
-
-.el-checkbox {
-  height: 30px !important;
-} */

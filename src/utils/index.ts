@@ -16,14 +16,6 @@ export const underlineToHump = (str: string): string => {
   });
 };
 
-export const setCssVar = (
-  prop: string,
-  val: string,
-  dom = document.documentElement
-) => {
-  dom.style.setProperty(prop, val);
-};
-
 export const decide = {
   isArray: function isArray(obj: Array<unknown>) {
     return Object.prototype.toString.call(obj) === "[object Array]";

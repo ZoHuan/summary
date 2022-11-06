@@ -3,35 +3,42 @@
     :class="[
       'side',
       theme,
-      !collapsed && 'side-collapse',
-      fixSiderbar && 'ant-fixed-sidemenu',
+      !sidebar && 'side-collapse',
+      fixSiderbar && 'fixed-sidemenu',
     ]"
   >
     <logo />
-    <el-menu :collapse="!collapsed" :collapse-transition="false">
+    <el-menu
+      class="scroll-bar-hidden"
+      :collapse="!sidebar"
+      :collapse-transition="false"
+      :default-active="activeMenu"
+    >
       <sub-menu :menu="item" v-for="item in menus" :key="item.name"></sub-menu>
     </el-menu>
   </el-aside>
 </template>
 
 <script lang="ts" setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
 import useTheme from "@/hooks/web/useTheme";
 import type { MenuType } from "@/types/user";
 
 import Logo from "../tools/Logo.vue";
 import SubMenu from "./SubMenu.vue";
 
-const { theme, fixSiderbar } = useTheme();
+const route = useRoute();
+const { theme, sidebar, fixSiderbar } = useTheme();
 
-withDefaults(
-  defineProps<{
-    menus: Array<MenuType>;
-    collapsed?: boolean;
-  }>(),
-  {
-    collapsed: true,
-  }
-);
+defineProps<{
+  menus: Array<MenuType>;
+}>();
+
+const activeMenu = computed(() => {
+  return route.name;
+});
 </script>
 
 <style lang="less" scoped>
@@ -39,6 +46,7 @@ withDefaults(
   position: relative;
   z-index: 10;
   width: 256px;
+  overflow: hidden;
   box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
   .logo {
     height: 60px;
@@ -46,6 +54,16 @@ withDefaults(
   }
   .el-menu {
     border: none;
+  }
+}
+.fixed-sidemenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  .el-menu {
+    height: calc(100% - 60px);
+    overflow-y: auto;
   }
 }
 

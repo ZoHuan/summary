@@ -13,8 +13,8 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import GlobalLayout from "@/components/page/GlobalLayout.vue";
 import { useRoute } from "vue-router";
+import GlobalLayout from "@/components/page/GlobalLayout.vue";
 
 const route = useRoute();
 

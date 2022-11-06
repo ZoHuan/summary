@@ -68,7 +68,7 @@ function generateChildRouters(menuList: Array<MenuType>) {
  * @param list 数组
  * @param tree 树
  */
-export function treeToList(list: Array<unknown>, tree: Array<MenuType>) {
+export function treeToList(list: Array<MenuType>, tree: Array<MenuType>) {
   tree.forEach((item) => {
     if (!item.meta.hidden && item.component !== "layouts/RouteView") {
       list.push(item);

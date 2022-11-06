@@ -1,14 +1,110 @@
 body {
-  &.colorWeak {
+  .weak {
     filter: invert(80%);
   }
 }
 
 // 布局
 .layout {
+  // 侧边栏弹出层
+  .drawer-sider {
+    &.dark {
+      background: #001529;
+    }
+    .el-drawer__body {
+      padding: 0;
+    }
+  }
+
+  // 侧边栏
+  .side {
+    &.light {
+      .logo {
+        position: relative;
+        z-index: 10;
+        box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+        h1 {
+          color: #303133;
+        }
+      }
+    }
+
+    &.dark {
+      background: #001529;
+      box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
+      .el-menu {
+        background: #001529;
+        .el-menu-item,
+        .el-sub-menu__title {
+          color: #ffffffa6;
+        }
+
+        .is-active .el-sub-menu__title,
+        .el-sub-menu__title:hover,
+        .el-menu-item:not(.is-disabled):focus,
+        .el-menu-item:not(.is-disabled):hover {
+          background-color: transparent;
+          color: #fff;
+        }
+
+        .el-menu-item:not(.is-disabled).is-active {
+          background-color: var(--el-color-primary);
+          color: #fff;
+        }
+
+        .el-menu--inline {
+          background: #000c17;
+        }
+      }
+    }
+
+    &.side-collapse {
+      .logo h1 {
+        color: transparent;
+      }
+    }
+  }
+
+  .sidemenu,
+  .bothmenu {
+    &.el-container {
+      &.sidemenu-opened {
+        padding-left: 256px;
+      }
+      &.sidemenu-closed {
+        padding-left: 80px;
+      }
+    }
+
+    .fixed-header {
+      &.sidemenu-opened {
+        width: calc(100% - 256px);
+      }
+      &.sidemenu-closed {
+        width: calc(100% - 80px);
+      }
+    }
+  }
+
+  .topmenu {
+    &.container-Fixed {
+      .header-nav-wide,
+      .el-scrollbar,
+      .el-main,
+      .el-footer {
+        max-width: 1200px;
+        margin: auto;
+      }
+    }
+  }
+
   .header,
   .header-nav {
     height: var(--el-header-height);
+
+    .collapse {
+      height: var(--el-header-height);
+    }
   }
 
   .header {
@@ -24,12 +120,12 @@ body {
   }
 
   .header-nav {
-    .header-nav-wrap .logo h1 {
+    .header-nav-wrapper .logo h1 {
       font-size: 16px;
     }
 
     &.light {
-      .header-nav-wrap {
+      .header-nav-wrapper {
         .logo h1 {
           color: #002140;
         }
@@ -72,7 +168,7 @@ body {
         }
 
         .el-menu-item:not(.is-disabled).is-active {
-          background-color: var(--el-menu-hover-text-color);
+          background-color: var(--el-color-primary);
           color: #fff !important;
         }
       }
@@ -83,12 +179,15 @@ body {
   //   height: var(--el-header-height);
   // }
 
-  .collapse {
+  .el-menu {
     height: var(--el-header-height);
   }
 
-  .el-menu {
-    height: var(--el-header-height);
+  // 标签栏
+  .tags-container {
+    .el-scrollbar__bar {
+      bottom: 0;
+    }
   }
 
   // .menubar {
@@ -109,70 +208,26 @@ body {
   // }
 }
 
-// 侧边栏
-.side {
-  &.light {
-    .logo {
-      position: relative;
-      z-index: 10;
-      box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-      h1 {
-        color: #303133;
-      }
-    }
-  }
-
-  &.dark {
-    background: #001529;
-    box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
-    .el-menu {
-      background: #001529;
-      .el-menu-item,
-      .el-sub-menu__title {
-        color: #ffffffa6;
-      }
-
-      .is-active .el-sub-menu__title,
-      .el-sub-menu__title:hover,
-      .el-menu-item:not(.is-disabled):focus,
-      .el-menu-item:not(.is-disabled):hover {
-        background-color: transparent;
-        color: #fff;
-      }
-
-      .el-menu-item:not(.is-disabled).is-active {
-        background-color: var(--el-menu-hover-text-color);
-        color: #fff;
-      }
-
-      .el-menu--inline {
-        background: #000c17;
-      }
-    }
-  }
-
-  &.side-collapse {
-    .logo h1 {
-      color: transparent;
-    }
-  }
-}
-
-// 侧边栏弹出层
-.drawer-sider {
-  &.dark {
-    background: #001529;
-  }
+// 设置面板
+.setting-drawer {
   .el-drawer__body {
-    padding: 0;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
-// 标签栏
-.tags-container {
-  .el-scrollbar__bar {
-    bottom: 0;
+// 滚动条设置
+.scroll-bar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
   }
+}
+
+// 进度条颜色
+#nprogress .bar {
+  background-color: var(--el-color-primary) !important;
 }
 
 // // 数据列表 样式

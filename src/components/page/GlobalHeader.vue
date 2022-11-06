@@ -1,16 +1,17 @@
 <template>
+  <el-header v-if="fixedHeader"></el-header>
   <el-header
-    v-if="!headerBarFixed"
+    v-show="headerHide"
     :class="[
-      fixedHeader && 'header-fixedHeader',
-      sidebar ? 'header-side-opened' : 'header-side-closed',
+      fixedHeader && isDesktop() && 'fixed-header',
+      sidebar ? 'sidemenu-opened' : 'sidemenu-closed',
     ]"
   >
     <!-- 侧边导航栏模式 -->
     <div v-if="layout === 'sidemenu'" :class="['header', theme]">
       <div>
         <el-icon class="collapse" @click="toggle">
-          <Fold v-if="collapsed" />
+          <Fold v-if="sidebar" />
           <Expand v-else />
         </el-icon>
       </div>
@@ -19,37 +20,43 @@
 
     <!-- 顶部导航栏模式 -->
     <div v-else-if="layout === 'topmenu'" :class="['header-nav', theme]">
-      <div class="header-nav-wrap" :class="{ 'header-nav-left': isDesktop() }">
-        <logo
-          :showTitle="isDesktop()"
-          :class="{ 'header-nav-logo': isDesktop() }"
-        />
-        <div v-if="isDesktop()" :class="{ 'header-nav-list': isDesktop() }">
-          <el-menu mode="horizontal">
-            <sub-menu
-              :menu="item"
-              v-for="item in menus"
-              :key="item.name"
-            ></sub-menu>
-          </el-menu>
+      <div class="header-nav-wide">
+        <div :class="['header-nav-wrapper', isDesktop() && 'header-nav-left']">
+          <logo
+            :showTitle="isDesktop()"
+            :class="{ 'header-nav-logo': isDesktop() }"
+          />
+          <div v-if="isDesktop()" :class="{ 'header-nav-list': isDesktop() }">
+            <el-menu mode="horizontal" :default-active="activeMenu">
+              <sub-menu
+                :menu="item"
+                v-for="item in menus"
+                :key="item.name"
+              ></sub-menu>
+            </el-menu>
+          </div>
+          <el-icon v-else class="collapse" @click="toggle">
+            <Fold v-if="sidebar" />
+            <Expand v-else />
+          </el-icon>
         </div>
-        <el-icon v-else class="collapse" @click="toggle">
-          <Fold v-if="collapsed" />
-          <Expand v-else />
-        </el-icon>
+        <user-menu :class="{ 'header-nav-right': isDesktop() }" />
       </div>
-      <user-menu :class="{ 'header-nav-right': isDesktop() }" />
     </div>
 
     <!-- 两侧导航栏模式 -->
     <div v-else-if="layout === 'bothmenu'" :class="['header-nav', 'header']">
-      <div class="header-nav-wrap" :class="{ 'header-nav-left': isDesktop() }">
+      <div :class="['header-nav-wrapper', isDesktop() && 'header-nav-left']">
         <el-icon class="collapse" @click="toggle">
-          <Fold v-if="collapsed" />
+          <Fold v-if="sidebar" />
           <Expand v-else />
         </el-icon>
         <div v-if="isDesktop()" :class="{ 'header-nav-list': isDesktop() }">
-          <el-menu mode="horizontal" class="menubar">
+          <el-menu
+            mode="horizontal"
+            class="menubar"
+            :default-active="activeMenu"
+          >
             <sub-menu
               :menu="item"
               v-for="item in topMenus"
@@ -64,8 +71,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash";
+import { appStore } from "@/store/modules/app";
 import useTheme from "@/hooks/web/useTheme";
 import type { MenuType } from "@/types/user";
 
@@ -73,19 +82,15 @@ import Logo from "../tools/Logo.vue";
 import UserMenu from "../tools/UserMenu.vue";
 import SubMenu from "../menu/SubMenu.vue";
 
-const { sidebar, theme, layout, fixedHeader, isDesktop } = useTheme();
+const route = useRoute();
+const app = appStore();
+const { theme, layout, sidebar, fixedHeader, fixedHeaderHidden, isDesktop } =
+  useTheme();
 
-const props = withDefaults(
-  defineProps<{
-    menus: Array<MenuType>;
-    collapsed?: boolean;
-  }>(),
-  {
-    collapsed: true,
-  }
-);
-
-const headerBarFixed = ref(false);
+const props = defineProps<{
+  menus: Array<MenuType>;
+}>();
+const headerHide = ref(true);
 
 const topMenus = computed(() => {
   const menus = cloneDeep(props.menus);
@@ -94,6 +99,31 @@ const topMenus = computed(() => {
     return menu;
   });
 });
+
+const activeMenu = computed(() => {
+  app.toggleTopMenu(route.matched[1].name as string);
+  return route.name;
+});
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+const handleScroll = () => {
+  if (fixedHeaderHidden.value) {
+    const scrollTop =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop;
+    if (scrollTop > 60) {
+      headerHide.value = false;
+    } else {
+      headerHide.value = true;
+    }
+  } else {
+    headerHide.value = true;
+  }
+};
 
 const emit = defineEmits(["toggle"]);
 const toggle = () => {
@@ -106,13 +136,28 @@ const toggle = () => {
   padding: 0;
 }
 
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: 100%;
+  transition: width 0.2s;
+}
+
+.header-nav-wide {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
+}
+
 .header,
 .header-nav {
   position: relative;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background: #fff;
   color: #303133;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
@@ -137,10 +182,9 @@ const toggle = () => {
 }
 
 .header-nav {
-  padding: 0 10px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
 
-  .header-nav-wrap {
+  .header-nav-wrapper {
     display: flex;
   }
 
@@ -159,7 +203,11 @@ const toggle = () => {
     width: calc(100% - 165px);
   }
 }
+
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 12px 0 0;
 }
 </style>

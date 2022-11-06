@@ -2,41 +2,39 @@
   <el-container :class="['layout', device]">
     <template v-if="isMobile()">
       <el-drawer
-        v-model="collapsed"
+        v-model="isCollapse"
         :custom-class="'drawer-sider ' + theme"
         :with-header="false"
         direction="ltr"
         size="256px"
-        @close="() => (collapsed = false)"
+        @close="() => (isCollapse = false)"
       >
-        <side-menu :menus="menus" :collapsed="collapsed"></side-menu>
+        <side-menu :menus="menus"></side-menu>
       </el-drawer>
     </template>
 
     <template v-else>
-      <side-menu
-        v-if="layout === 'sidemenu'"
-        :menus="menus"
-        :collapsed="collapsed"
-      ></side-menu>
+      <side-menu v-if="layout === 'sidemenu'" :menus="menus"></side-menu>
       <side-menu
         v-else-if="layout === 'bothmenu'"
         :menus="childMenus"
-        :collapsed="collapsed"
       ></side-menu>
     </template>
 
     <el-container
-      :class="[layout, `content-width-${contentWidth}`]"
-      :style="{
-        paddingLeft:
-          fixSiderbar && isDesktop() ? `${sidebar ? 200 : 80}px` : '0',
-      }"
+      :class="[
+        layout,
+        `container-${contentWidth}`,
+        fixSiderbar &&
+          isDesktop() &&
+          (sidebar ? 'sidemenu-opened' : 'sidemenu-closed'),
+        ,
+      ]"
     >
-      <global-header :menus="menus" :collapsed="collapsed" @toggle="toggle" />
-      <global-tabs />
+      <global-header :menus="menus" @toggle="toggle" />
+      <global-tabs v-if="multiTab" />
 
-      <el-main :class="{ 'fixed-header': fixedHeader }">
+      <el-main>
         <slot></slot>
       </el-main>
 
@@ -44,6 +42,8 @@
         <global-footer />
       </el-footer>
     </el-container>
+
+    <setting-drawer />
   </el-container>
 </template>
 
@@ -60,30 +60,26 @@ import GlobalHeader from "@/components/page/GlobalHeader.vue";
 import GlobalFooter from "@/components/page/GlobalFooter.vue";
 import GlobalTabs from "@/components/page/GlobalTabs.vue";
 import SideMenu from "@/components/menu/SideMenu.vue";
+import SettingDrawer from "@/components/setting/SettingDrawer.vue";
 
 const app = appStore();
 const user = userStore();
 const permission = permissionStore();
 
 const {
-  sidebar,
   device,
   theme,
   layout,
   topMenu,
-  // multiTab,
+  sidebar,
+  multiTab,
   contentWidth,
-  fixedHeader,
   fixSiderbar,
-  // autoHideHeader,
-  // color,
-  // weak,
   isMobile,
   isDesktop,
 } = useTheme();
 
-const collapsed = ref(true);
-// const activeMenu = ref();
+const isCollapse = ref(true);
 const menus = ref();
 
 const childMenus = computed(() => {
@@ -106,8 +102,8 @@ const permissionMenuList = () => {
 menus.value = permissionMenuList();
 
 const toggle = () => {
-  collapsed.value = !collapsed.value;
-  app.toggleSidebar(!collapsed.value);
+  isCollapse.value = !isCollapse.value;
+  app.toggleSidebar(isCollapse.value);
   // triggerWindowResizeEvent();
 };
 </script>
@@ -119,14 +115,12 @@ const toggle = () => {
 
   .el-main {
     height: 100%;
+    width: 100%;
   }
-  .fixed-header {
-    padding-top: 60px;
-  }
+
   .el-footer {
     height: max-content;
-    margin: 24px 0 16px;
-    padding: 0 16px;
+    padding: 24px 16px 16px;
     text-align: center;
   }
 }

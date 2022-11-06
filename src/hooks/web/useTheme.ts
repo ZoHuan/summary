@@ -5,16 +5,16 @@ export default function () {
   const store = appStore();
 
   const {
-    sidebar,
     device,
     theme,
     layout,
     topMenu,
+    sidebar,
     multiTab,
     contentWidth,
     fixedHeader,
     fixSiderbar,
-    autoHideHeader,
+    fixedHeaderHidden,
     color,
     weak,
   } = storeToRefs(store);
@@ -28,16 +28,16 @@ export default function () {
   };
 
   return {
-    sidebar,
     device,
     theme,
     layout,
     topMenu,
+    sidebar,
     multiTab,
     contentWidth,
     fixedHeader,
     fixSiderbar,
-    autoHideHeader,
+    fixedHeaderHidden,
     color,
     weak,
     isMobile,
