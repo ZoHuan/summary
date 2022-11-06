@@ -43,7 +43,7 @@
       </el-footer>
     </el-container>
 
-    <setting-drawer />
+    <setting-drawer v-if="isShow" />
   </el-container>
 </template>
 
@@ -81,6 +81,13 @@ const {
 
 const isCollapse = ref(true);
 const menus = ref();
+
+const isShow = computed(() => {
+  return (
+    process.env.NODE_ENV === "development" ||
+    process.env.VUE_APP_PREVIEW === "true"
+  );
+});
 
 const childMenus = computed(() => {
   let menu = menus.value.find((item: MenuType) => item.name === topMenu.value);
