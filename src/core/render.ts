@@ -1,10 +1,9 @@
 import pinia from "@/store";
-import { userStore } from "@/store/modules/user";
 import { appStore } from "@/store/modules/app";
 import { useCache } from "@/hooks/web/useCache";
+import { updateTheme } from "@/config/setting.config";
 import defaultSettings from "@/config/defaultSettings";
 import {
-  ACCESS_TOKEN,
   // TOGGLE_MOBILE_TYPE,
   TOGGLE_THEME,
   TOGGLE_LAYOUT,
@@ -19,11 +18,14 @@ import {
   //   APP_LANGUAGE,
 } from "@/store/mutation-types";
 
-const user = userStore(pinia);
 const app = appStore(pinia);
 const { storage } = useCache();
 
 export default function () {
+  const isMobil = navigator.userAgent.match(
+    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+  );
+  app.device = isMobil ? "mobile" : "desktop";
   app.theme = storage.get(TOGGLE_THEME) || defaultSettings.theme;
   app.layout = storage.get(TOGGLE_LAYOUT) || defaultSettings.layout;
   app.sidebar = storage.get(TOGGLE_SIDEBAR) || defaultSettings.sidebar;
@@ -39,5 +41,5 @@ export default function () {
   app.color = storage.get(TOGGLE_COLOR) || defaultSettings.color;
   app.weak = storage.get(TOGGLE_WEAK) || defaultSettings.weak;
 
-  user.token = storage.get(ACCESS_TOKEN);
+  updateTheme(app.color);
 }

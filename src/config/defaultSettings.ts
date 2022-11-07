@@ -22,7 +22,7 @@ export default {
   fixedHeader: false, // sticky header
   fixSiderbar: false, // sticky siderbar
   fixedHeaderHidden: false, //  auto hide header
-  color: "#1890ff", // '#F5222D', // primary color of ant design
+  color: "#1890FF", // '#F5222D', // primary color of ant design
   weak: false,
 
   title: "SUMMARY",

@@ -11,7 +11,7 @@
     <div v-if="layout === 'sidemenu'" :class="['header', theme]">
       <div>
         <el-icon class="collapse" @click="toggle">
-          <Fold v-if="sidebar" />
+          <Fold v-if="sidebar && isDesktop()" />
           <Expand v-else />
         </el-icon>
       </div>
@@ -36,7 +36,7 @@
             </el-menu>
           </div>
           <el-icon v-else class="collapse" @click="toggle">
-            <Fold v-if="sidebar" />
+            <Fold v-if="sidebar && isDesktop()" />
             <Expand v-else />
           </el-icon>
         </div>
@@ -48,7 +48,7 @@
     <div v-else-if="layout === 'bothmenu'" :class="['header-nav', 'header']">
       <div :class="['header-nav-wrapper', isDesktop() && 'header-nav-left']">
         <el-icon class="collapse" @click="toggle">
-          <Fold v-if="sidebar" />
+          <Fold v-if="sidebar && isDesktop()" />
           <Expand v-else />
         </el-icon>
         <div v-if="isDesktop()" :class="{ 'header-nav-list': isDesktop() }">
