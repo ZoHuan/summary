@@ -1,5 +1,8 @@
 <template>
-  <el-sub-menu :index="menu.name" v-if="menu.children">
+  <el-sub-menu
+    :index="menu.name"
+    v-if="menu.children && !menu.meta.hideChildren"
+  >
     <template #title>
       <el-icon><component :is="menu.meta.icon"></component></el-icon>
       <span>{{ menu.meta.title }}</span>

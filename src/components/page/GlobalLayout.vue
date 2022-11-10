@@ -56,11 +56,11 @@ import { permissionStore } from "@/store/modules/permission";
 import useTheme from "@/hooks/web/useTheme";
 import type { MenuType } from "@/types/user";
 
-import GlobalHeader from "@/components/page/GlobalHeader.vue";
-import GlobalFooter from "@/components/page/GlobalFooter.vue";
-import GlobalTabs from "@/components/page/GlobalTabs.vue";
-import SideMenu from "@/components/menu/SideMenu.vue";
-import SettingDrawer from "@/components/setting/SettingDrawer.vue";
+import GlobalHeader from "./GlobalHeader.vue";
+import GlobalFooter from "./GlobalFooter.vue";
+import GlobalTabs from "./GlobalTabs.vue";
+import SideMenu from "../menu/SideMenu.vue";
+import SettingDrawer from "../setting/SettingDrawer.vue";
 
 const app = appStore();
 const user = userStore();
@@ -80,7 +80,6 @@ const {
 } = useTheme();
 
 const isCollapse = ref(true);
-const menus = ref();
 
 const isShow = computed(() => {
   return (
@@ -89,24 +88,22 @@ const isShow = computed(() => {
   );
 });
 
-const childMenus = computed(() => {
-  let menu = menus.value.find((item: MenuType) => item.name === topMenu.value);
-  return (menu && menu.children) || {};
-});
+const menus = computed(() => {
+  const menuList = user.menuList;
 
-const permissionMenuList = () => {
-  const routers = user.menuList;
+  if (permission.permissionList === "-1") return menuList;
 
-  if (permission.permissionList === "-1") return routers;
-
-  let router = routers.find((item) => {
+  let menu = menuList.find((item) => {
     return item.name === permission.permissionList;
   });
 
-  return (router && router.children) || routers;
-};
+  return (menu && menu.children) || menuList;
+});
 
-menus.value = permissionMenuList();
+const childMenus = computed(() => {
+  let menu = menus.value.find((item: MenuType) => item.name === topMenu.value);
+  return (menu && menu.children) || [];
+});
 
 const toggle = () => {
   isCollapse.value = !isCollapse.value;

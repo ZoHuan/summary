@@ -189,23 +189,6 @@ body {
       bottom: 0;
     }
   }
-
-  // .menubar {
-  //   background: var(--el-color-primary);
-  //   .el-menu-item,
-  //   .el-sub-menu__title {
-  //     color: #fff;
-  //   }
-  //   .el-menu-item {
-  //     border: none;
-  //   }
-  //   .el-menu-item:not(.is-disabled).is-active,
-  //   .el-menu-item:not(.is-disabled):hover {
-  //     background-color: #fff;
-  //     border: none;
-  //     color: var(--el-menu-hover-text-color);
-  //   }
-  // }
 }
 
 // 设置面板
@@ -230,6 +213,28 @@ body {
   background-color: var(--el-color-primary) !important;
 }
 
+// 个人中心
+.account-center-main {
+  .account-center-right {
+    .el-tabs__item {
+      height: 56px;
+      color: rgba(0, 0, 0, 0.65);
+      &:hover {
+        color: var(--el-color-primary);
+      }
+      &.is-active {
+        color: var(--el-color-primary);
+      }
+    }
+    .el-tabs__nav-wrap {
+      padding: 0 24px;
+    }
+    .el-tabs__nav-next,
+    .el-tabs__nav-prev {
+      line-height: 56px;
+    }
+  }
+}
 // // 数据列表 样式
 // .table-alert {
 //   margin-bottom: 16px;

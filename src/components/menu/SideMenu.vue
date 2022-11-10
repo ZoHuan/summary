@@ -37,7 +37,12 @@ defineProps<{
 }>();
 
 const activeMenu = computed(() => {
-  return route.name;
+  const { name, meta, matched } = route;
+  if (meta.hidden) {
+    return matched[matched.length - 2].name;
+  } else {
+    return name;
+  }
 });
 </script>
 

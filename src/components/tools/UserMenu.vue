@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store/modules/user";
@@ -64,12 +64,14 @@ const router = useRouter();
 const store = userStore();
 
 const { device, isMobile, isDesktop } = useTheme();
-const list: Array<MenuType> = [];
-treeToList(list, store.menuList);
 
-const searchMenuOptions = ref(list);
 const searchMenuComp = ref("span");
 const searchMenuVisible = ref(false);
+const searchMenuOptions = computed(() => {
+  const list: Array<MenuType> = [];
+  treeToList(list, store.menuList);
+  return list;
+});
 
 const showClick = () => {
   searchMenuVisible.value = true;
@@ -99,10 +101,10 @@ const getAvatar = () => {
 };
 
 const handleToCenter = () => {
-  router.push({ path: "/account/center" });
+  router.push({ name: "Center" });
 };
 const handleToSettings = () => {
-  router.push({ path: "/account/settings" });
+  router.push({ name: "Settings" });
 };
 const handleLogout = () => {
   ElMessageBox.confirm("您确定要注销吗？", "提示", {

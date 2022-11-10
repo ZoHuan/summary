@@ -39,7 +39,7 @@ import path from "path";
 import { permissionStore } from "@/store/modules/permission";
 import { tagsStore } from "@/store/modules/tags";
 
-import ContextMenu from "@/components/tools/ContextMenu.vue";
+import ContextMenu from "../tools/ContextMenu.vue";
 
 import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from "vue-router";
 import type { TagsType, ContextMenuType } from "@/types/user";
@@ -143,7 +143,7 @@ watch(menuVisible, (newValue) => {
 });
 
 const isActive = (tag: RouteLocationNormalizedLoaded) => {
-  return tag.path === route.path;
+  return tag.name === route.name;
 };
 
 const isAffix = (tag: RouteLocationNormalizedLoaded) => {

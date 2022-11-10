@@ -31,6 +31,7 @@ export interface MetaType {
   icon: string;
   title: string;
   hidden: boolean;
+  hideChildren?: boolean;
   affix?: boolean;
   noCache?: string;
   url?: string;

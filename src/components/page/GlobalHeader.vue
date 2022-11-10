@@ -101,8 +101,13 @@ const topMenus = computed(() => {
 });
 
 const activeMenu = computed(() => {
-  app.toggleTopMenu(route.matched[1].name as string);
-  return route.name;
+  const { name, meta, matched } = route;
+  app.toggleTopMenu(matched[1].name as string);
+  if (meta.hidden) {
+    return matched[matched.length - 2].name;
+  } else {
+    return name;
+  }
 });
 
 onMounted(() => {

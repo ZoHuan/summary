@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "551445",
+      "name": "考勤签到",
+      "font_class": "address",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "553251",
+      "name": "组织架构",
+      "font_class": "group",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "553322",
+      "name": "所属职位",
+      "font_class": "position",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
       "icon_id": "4765731",
       "name": "copyright",
       "font_class": "copyright",

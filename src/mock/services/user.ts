@@ -7,14 +7,10 @@ const userInfo = () => {
     username: "admin",
     name: "管理员",
     password: "",
-    avatar: "/avatar.jpg",
+    avatar: "@/assets/avatar.png",
     telephone: "",
     status: 1,
-    lastLoginIp: "27.154.74.117",
-    lastLoginTime: 1534837621348,
     creatorId: "admin",
-    createTime: 1497160610259,
-    merchantCode: "TLif2btpzg079h15bk",
     deleted: 0,
     roles: ["admin"],
   };
@@ -122,12 +118,62 @@ const userMenu = () => {
       parentId: 0,
       id: 1,
       component: "layouts/RouteView",
-      // redirect: "/dashboard/workplace",
+      redirect: "/account/center",
       meta: {
-        icon: "setting",
+        icon: "user",
         title: "个人页",
         hidden: false,
       },
+      children: [
+        {
+          name: "Center",
+          path: "center",
+          parentId: 1,
+          id: 11,
+          component: "account/center/Center",
+          meta: {
+            title: "个人中心",
+            hidden: false,
+          },
+        },
+        {
+          name: "Settings",
+          path: "settings",
+          parentId: 1,
+          id: 22,
+          component: "account/settings/Settings",
+          redirect: "/account/settings/basic",
+          meta: {
+            title: "个人设置",
+            hidden: false,
+            hideChildren: true,
+          },
+          children: [
+            {
+              name: "BasicSettings",
+              path: "basic",
+              parentId: 22,
+              id: 221,
+              component: "account/settings/BasicSetting",
+              meta: {
+                title: "基本设置",
+                hidden: true,
+              },
+            },
+            {
+              name: "SecuritySettings",
+              path: "security",
+              parentId: 22,
+              id: 222,
+              component: "account/settings/SecuritySettings",
+              meta: {
+                title: "安全设置",
+                hidden: true,
+              },
+            },
+          ],
+        },
+      ],
     },
   ];
   return builder(menu, "");
