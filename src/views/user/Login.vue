@@ -14,13 +14,13 @@
             <el-form-item prop="username">
               <el-input
                 v-model="loginForm.username"
-                placeholder="用户名"
+                placeholder="用户名:admin"
               ></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input
                 v-model="loginForm.password"
-                placeholder="密码"
+                placeholder="密码:123456"
                 type="password"
                 @keyup.enter="handleLogin(loginRef)"
               ></el-input>
