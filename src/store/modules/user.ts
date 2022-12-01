@@ -5,10 +5,11 @@ import {
   getUserInfo,
   getUserMenu,
   logoutAPi,
-} from "@/api/login/login";
-import type { LoginType } from "@/api/login/types";
+} from "@/api/user/login";
+import type { LoginType } from "@/api/user/types";
 import type { MenuType } from "@/types/user";
 import { ACCESS_TOKEN } from "../mutation-types";
+import { AxiosResponse } from "axios";
 
 const { storage } = useCache();
 
@@ -60,7 +61,7 @@ export const userStore = defineStore({
 
     // 获取用户信息
     getInfo() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve: (value: AxiosResponse) => void, reject) => {
         getUserInfo()
           .then((response) => {
             const result = response.data.result;

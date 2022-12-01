@@ -1,3 +1,4 @@
+// 用户信息
 export interface UserInfoType {
   id: string;
   name: string;
@@ -16,6 +17,7 @@ export interface UserInfoType {
   role: RoleType;
 }
 
+// 导航菜单
 export interface MenuType {
   name: string;
   path: string;
@@ -27,6 +29,7 @@ export interface MenuType {
   children?: Array<MenuType>;
 }
 
+// 导航菜单元信息
 export interface MetaType {
   icon: string;
   title: string;
@@ -39,6 +42,16 @@ export interface MetaType {
   internalOrExternal?: boolean;
 }
 
+// 部门信息
+export interface DepartmentType {
+  parentId: number | string;
+  id: number;
+  code: string;
+  name: string;
+  children?: Array<DepartmentType>;
+}
+
+// 角色信息
 export interface RoleType {
   id: string;
   name: string;
@@ -50,6 +63,7 @@ export interface RoleType {
   permissions: Array<PermissionsType>;
 }
 
+// 权限信息
 export interface PermissionsType {
   roleId: string;
   permissionId: string;
@@ -60,12 +74,14 @@ export interface PermissionsType {
   dataAccess: null;
 }
 
+// 权限操作信息
 export interface ActionEntitySetType {
   action: string;
   describe: string;
   defaultCheck: boolean;
 }
 
+// 标签信息
 export interface TagsType {
   fullPath: string;
   path: string;
@@ -73,6 +89,7 @@ export interface TagsType {
   meta: RouteMeta;
 }
 
+// 标签操作信息
 export interface ContextMenuType {
   icon: string;
   text: string;

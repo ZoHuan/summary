@@ -10,7 +10,7 @@ const responseBody: ResponseType<object> = {
 export const builder = (
   data: object,
   message: string,
-  code = 0,
+  code = 200,
   headers = {}
 ) => {
   responseBody.result = data;

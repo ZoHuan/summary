@@ -1,30 +1,21 @@
 import request from "@/utils/request";
-import type * as types from "./types";
+import type { LoginType, RegisterType, SmsType } from "./types";
 
 const userApi = {
   Login: "/auth/login",
   Logout: "/auth/logout",
   // ForgePassword: "/auth/forge-password",
   Register: "/auth/register",
-  // twoStepCode: "/auth/2step-code",
   SendSms: "/account/sms",
-  // SendSmsErr: "/account/sms_err",
   UserInfo: "/user/info",
   UserMenu: "/user/menu",
 };
 
 /**
- * login func
- * parameter: {
- *     username: '',
- *     password: '',
- *     remember_me: true,
- *     captcha: '12345'
- * }
  * @param parameter
  * @returns {*}
  */
-export function loginAPi(parameter: types.LoginType) {
+export function loginAPi(parameter: LoginType) {
   return request({
     url: userApi.Login,
     method: "post",
@@ -32,7 +23,7 @@ export function loginAPi(parameter: types.LoginType) {
   });
 }
 
-export function register(parameter: types.RegisterType) {
+export function register(parameter: RegisterType) {
   return request({
     url: userApi.Register,
     method: "post",
@@ -40,7 +31,7 @@ export function register(parameter: types.RegisterType) {
   });
 }
 
-export function getSmsCaptcha(parameter: types.SmsType) {
+export function getSmsCaptcha(parameter: SmsType) {
   return request({
     url: userApi.SendSms,
     method: "post",
@@ -74,15 +65,3 @@ export function logoutAPi() {
     },
   });
 }
-
-/**
- * get user 2step code open?
- * @param parameter {*}
- */
-// export function get2step(parameter) {
-//   return request({
-//     url: userApi.twoStepCode,
-//     method: "post",
-//     data: parameter,
-//   });
-// }

@@ -114,7 +114,7 @@ import { InternalRuleItem } from "async-validator";
 import type { FormInstance, FormRules } from "element-plus";
 import type { AxiosError } from "axios";
 
-import { getSmsCaptcha } from "@/api/login/login";
+import { getSmsCaptcha } from "@/api/user/login";
 import { scorePassword } from "@/utils/util";
 import type { ResponseType, ObjectType } from "@/types/request";
 

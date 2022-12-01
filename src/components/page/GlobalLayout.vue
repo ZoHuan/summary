@@ -83,7 +83,7 @@ const isCollapse = ref(true);
 
 const isShow = computed(() => {
   return (
-    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV !== "production" ||
     process.env.VUE_APP_PREVIEW === "true"
   );
 });

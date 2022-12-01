@@ -6,9 +6,9 @@ export interface ResponseType<T> {
   [propName: string]: boolean | number | string | object | Array<string>;
 }
 export interface ParamType {
-  body?: string;
-  type?: string;
-  url?: string | undefined;
+  body: string | null;
+  type: string;
+  url: string | undefined;
 }
 
 export interface ObjectType {
