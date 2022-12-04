@@ -4,20 +4,43 @@
     <el-form :model="queryParam" :inline="true" ref="queryForm">
       <el-row :gutter="48">
         <el-col :md="8" :sm="24">
-          <el-form-item label="部门名称：" prop="name">
+          <el-form-item label="角色名称：" prop="name">
             <el-input v-model="queryParam.name" />
           </el-form-item>
         </el-col>
         <el-col :md="8" :sm="24">
-          <el-form-item label="部门编号：" prop="code">
+          <el-form-item label="角色编号：" prop="code">
             <el-input v-model="queryParam.code" />
           </el-form-item>
         </el-col>
 
-        <el-col :md="8" :sm="24">
+        <template v-if="advanced">
+          <el-col :md="8" :sm="24">
+            <el-form-item label="创建时间：" prop="date">
+              <el-date-picker
+                v-model="queryParam.date"
+                value-format="YYYY-MM-DD"
+                type="date"
+              />
+            </el-form-item>
+          </el-col>
+        </template>
+
+        <el-col
+          :md="(!advanced && 8) || 24"
+          :sm="24"
+          :class="advanced && 'search-advanced'"
+        >
           <span>
             <el-button type="primary" @click="searchQuery">查询</el-button>
             <el-button @click="searchReset">重置</el-button>
+            <a @click="toggleAdvanced" class="search-advanced-button">
+              {{ advanced ? "收起" : "展开" }}
+              <el-icon>
+                <ArrowUp v-if="advanced" />
+                <ArrowDown v-else />
+              </el-icon>
+            </a>
           </span>
         </el-col>
       </el-row>
@@ -33,17 +56,7 @@
 
     <!-- 列表 -->
     <el-table :data="dataList" row-key="id" stripe>
-      <el-table-column
-        label="序号"
-        fixed="left"
-        width="100"
-        label-class-name="table-index-label"
-        class-name="table-index"
-      >
-        <template #default="scope">
-          {{ scope.$index + 1 }}
-        </template>
-      </el-table-column>
+      <el-table-column label="序号" type="index" width="100" align="center" />
       <el-table-column
         v-for="item of columns"
         :key="item.prop"
@@ -56,21 +69,23 @@
             type="primary"
             plain
             size="small"
-            @click="handleEdit(scope.row)"
+            :disabled="scope.row.disabled"
+            @click="scope.row.disabled || handleEdit(scope.row)"
             >编辑</el-button
           >
           <el-button
             type="danger"
             plain
             size="small"
-            @click="handleDel(scope.row)"
+            :disabled="scope.row.disabled"
+            @click="scope.row.disabled || handleDel()"
             >删除</el-button
           >
         </template>
       </el-table-column>
     </el-table>
 
-    <department-modal
+    <role-modal
       ref="modal"
       :modalVisible="modalVisible"
       :title="modalTitle"
@@ -80,26 +95,33 @@
     />
   </el-card>
 </template>
+
 <script lang="ts" setup>
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
-import { getDepartmentList, departmentDelete } from "@/api/system/department";
 import type { FormInstance } from "element-plus";
-import type { departmentType } from "@/api/system/types";
-import DepartmentModal from "./DepartmentModal.vue";
-defineComponent({ name: "DepartmentView" });
+import type { roleType } from "@/api/system/types";
+import RoleModal from "./RoleModal.vue";
+import { getRoleList } from "@/api/system/role";
+
+defineComponent({ name: "RoleView" });
 
 // 查询表单
 const queryForm = ref<FormInstance>();
+// 高级搜索 展开/关闭
+const advanced = ref(false);
 // 查询参数
 const queryParam = reactive({
   name: "",
   code: "",
+  date: "",
 });
 // 表头
 const columns = reactive([
-  { label: "部门名称", prop: "name" },
-  { label: "部门编号", prop: "code" },
+  { label: "角色名称", prop: "name" },
+  { label: "角色编号", prop: "code" },
+  { label: "角色描述", prop: "describe" },
+  { label: "创建时间", prop: "date" },
   { label: "操作", prop: "actions" },
 ]);
 // 数据
@@ -116,7 +138,7 @@ onMounted(() => {
 
 // 获取数据
 const getData = () => {
-  getDepartmentList(queryParam).then((res) => {
+  getRoleList(queryParam).then((res) => {
     dataList.value = res.data.result;
   });
 };
@@ -131,10 +153,15 @@ const searchReset = () => {
   queryForm.value.resetFields();
 };
 
+// 切换高级搜索
+const toggleAdvanced = () => {
+  advanced.value = !advanced.value;
+};
+
 // 添加
 const handleAdd = () => {
   modalVisible.value = true;
-  modalTitle.value = "添加部门";
+  modalTitle.value = "添加角色";
   modalPattern.value = 1;
 };
 
@@ -144,24 +171,21 @@ const updatedVisible = (flag: boolean) => {
 };
 
 // 编辑
-const handleEdit = (data: departmentType) => {
+const handleEdit = (data: roleType) => {
   modalVisible.value = true;
-  modalTitle.value = "编辑部门";
+  modalTitle.value = "编辑角色";
   modalPattern.value = 2;
   modal.value?.init(data);
 };
 
 // 删除
-const handleDel = (data: departmentType) => {
+const handleDel = () => {
   ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     type: "warning",
   }).then(() => {
-    return departmentDelete(data).then((res) => {
-      ElMessage.success(res.data.message);
-      getData();
-    });
+    ElMessage.success("删除角色成功！");
   });
 };
 </script>

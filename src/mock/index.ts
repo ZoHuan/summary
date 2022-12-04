@@ -9,7 +9,7 @@ if (
   require("./services/auth");
   require("./services/user");
   require("./system/department");
-  // require("./services/other");
+  require("./system/role");
   // require("./services/tagCloud");
   // require("./services/article");
 

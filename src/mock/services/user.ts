@@ -79,7 +79,7 @@ const userMenu = () => {
           path: "role",
           parentId: 1,
           id: 3,
-          component: "RoleList",
+          component: "system/role/Role",
           meta: {
             icon: "user",
             title: "角色管理",
