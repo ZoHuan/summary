@@ -6,6 +6,7 @@ import "@/mock";
 import "@/permission";
 import Initializer from "@/core/render";
 import ElementPlus from "element-plus";
+import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/display.css";
@@ -18,4 +19,9 @@ const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
-app.use(router).use(pinia).use(ElementPlus).use(Initializer).mount("#app");
+app
+  .use(router)
+  .use(pinia)
+  .use(ElementPlus, { locale: zhCn })
+  .use(Initializer)
+  .mount("#app");

@@ -75,7 +75,7 @@
       :modalVisible="modalVisible"
       :title="modalTitle"
       :pattern="modalPattern"
-      @updatedVisible="updatedVisible"
+      @toggleVisible="toggleVisible"
       @refresh="getData"
     />
   </el-card>
@@ -139,7 +139,7 @@ const handleAdd = () => {
 };
 
 // 模块显示
-const updatedVisible = (flag: boolean) => {
+const toggleVisible = (flag: boolean) => {
   modalVisible.value = flag;
 };
 

@@ -280,10 +280,21 @@ body {
   }
 }
 
+// 数据列表分页
+.table-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
 // 模态框样式
 .custom-dialog {
   .el-dialog__header {
     padding-bottom: 0px;
+  }
+  .custom-dialog-body {
+    height: 400px;
+    overflow: auto;
   }
   .el-dialog__footer {
     padding-top: 0px;

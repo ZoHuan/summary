@@ -9,7 +9,7 @@ const roleApi = {
  * @param parameter
  * @returns {*}
  */
-export function getRoleList(parameter: getRoleType) {
+export function getRoleList(parameter?: getRoleType) {
   return request({
     url: roleApi.List,
     method: "get",

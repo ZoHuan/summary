@@ -12,7 +12,7 @@ const departmentApi = {
  * @param parameter
  * @returns {*}
  */
-export function getDepartmentList(parameter: getDepartmentType) {
+export function getDepartmentList(parameter?: getDepartmentType) {
   return request({
     url: departmentApi.List,
     method: "get",

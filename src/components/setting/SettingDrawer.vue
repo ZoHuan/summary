@@ -201,7 +201,7 @@
               </div>
             </template>
           </el-alert>
-          <el-button @click="doCopy" :icon="DocumentCopy">拷贝设置</el-button>
+          <el-button @click="doCopy" icon="DocumentCopy">拷贝设置</el-button>
         </div>
       </div>
     </el-drawer>
@@ -219,7 +219,6 @@ import {
   updateTheme,
   updateColorWeak,
 } from "@/config/setting.config";
-import { DocumentCopy } from "@element-plus/icons-vue";
 
 const app = appStore();
 const {

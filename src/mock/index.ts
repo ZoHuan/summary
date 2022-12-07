@@ -10,7 +10,7 @@ if (
   require("./services/user");
   require("./system/department");
   require("./system/role");
-  // require("./services/tagCloud");
+  require("./system/user");
   // require("./services/article");
 
   Mock.setup({

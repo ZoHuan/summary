@@ -12,8 +12,8 @@
       <el-form-item label="上级部门" prop="parentId">
         <el-tree-select
           v-model="form.parentId"
-          :data="dataList"
-          :props="defaultProps"
+          :data="departmentList"
+          :props="departmentProps"
           :render-after-expand="false"
           check-strictly
           placeholder="请选择上级部门"
@@ -35,13 +35,12 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from "vue";
+import { departmentInsert, departmentUpdate } from "@/api/system/department";
+import useSystem from "@/hooks/web/useSystem";
 import type { FormInstance, FormRules } from "element-plus";
-import {
-  getDepartmentList,
-  departmentInsert,
-  departmentUpdate,
-} from "@/api/system/department";
 import type { departmentType } from "@/api/system/types";
+
+const { departmentProps, departmentList, getDepartmentData } = useSystem();
 
 const props = defineProps<{
   modalVisible: boolean;
@@ -49,11 +48,6 @@ const props = defineProps<{
   pattern: number;
 }>();
 
-const defaultProps = {
-  children: "children",
-  label: "name",
-  value: "id",
-};
 const formRef = ref<FormInstance>();
 const form = reactive({
   parentId: "",
@@ -64,29 +58,22 @@ const rules = reactive<FormRules>({
   name: [{ required: true, message: "请输入部门名称！", trigger: "blur" }],
   code: [{ required: true, message: "请输入部门编号！", trigger: "blur" }],
 });
-const dataList = ref();
 
 // 模块显示/隐藏
-const emit = defineEmits(["updatedVisible", "refresh"]);
+const emit = defineEmits(["toggleVisible", "refresh"]);
 const visible = computed({
   get() {
     return props.modalVisible;
   },
   set() {
     formRef.value?.resetFields();
-    emit("updatedVisible", false);
+    emit("toggleVisible", false);
   },
 });
 
 onMounted(() => {
-  getData();
+  getDepartmentData();
 });
-
-const getData = () => {
-  getDepartmentList({ name: "", code: "" }).then((res) => {
-    dataList.value = res.data.result;
-  });
-};
 
 // 初始化
 const init = (data: departmentType) => {
@@ -96,7 +83,7 @@ const init = (data: departmentType) => {
 // 取消
 const cancel = (formEl: FormInstance | undefined) => {
   formEl && formEl.resetFields();
-  emit("updatedVisible", false);
+  emit("toggleVisible", false);
 };
 
 // 确定
@@ -107,13 +94,13 @@ const confirm = (formEl: FormInstance | undefined) => {
         if (props.pattern === 1) {
           departmentInsert(form).then(() => {
             formEl.resetFields();
-            emit("updatedVisible", false);
+            emit("toggleVisible", false);
             emit("refresh");
           });
         } else {
           departmentUpdate(form).then(() => {
             formEl.resetFields();
-            emit("updatedVisible", false);
+            emit("toggleVisible", false);
             emit("refresh");
           });
         }
@@ -121,7 +108,5 @@ const confirm = (formEl: FormInstance | undefined) => {
     });
 };
 
-defineExpose({
-  init,
-});
+defineExpose({ init });
 </script>

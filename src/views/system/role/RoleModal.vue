@@ -50,14 +50,14 @@ const rules = reactive<FormRules>({
 });
 
 // 模块显示/隐藏
-const emit = defineEmits(["updatedVisible", "refresh"]);
+const emit = defineEmits(["toggleVisible", "refresh"]);
 const visible = computed({
   get() {
     return props.modalVisible;
   },
   set() {
     formRef.value?.resetFields();
-    emit("updatedVisible", false);
+    emit("toggleVisible", false);
   },
 });
 
@@ -69,7 +69,7 @@ const init = (data: roleType) => {
 // 取消
 const cancel = (formEl: FormInstance | undefined) => {
   formEl && formEl.resetFields();
-  emit("updatedVisible", false);
+  emit("toggleVisible", false);
 };
 
 // 确定
@@ -79,12 +79,12 @@ const confirm = (formEl: FormInstance | undefined) => {
       if (valid) {
         if (props.pattern === 1) {
           ElMessage.success("添加角色成功！");
-          emit("updatedVisible", false);
+          emit("toggleVisible", false);
           emit("refresh");
         } else {
           ElMessage.success("编辑角色成功！");
           formEl.resetFields();
-          emit("updatedVisible", false);
+          emit("toggleVisible", false);
           emit("refresh");
         }
       }

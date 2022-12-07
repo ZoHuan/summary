@@ -5,12 +5,12 @@
       <el-row :gutter="48">
         <el-col :md="8" :sm="24">
           <el-form-item label="角色名称：" prop="name">
-            <el-input v-model="queryParam.name" />
+            <el-input v-model="queryParam.name" suffix-icon="XXXX" />
           </el-form-item>
         </el-col>
         <el-col :md="8" :sm="24">
           <el-form-item label="角色编号：" prop="code">
-            <el-input v-model="queryParam.code" />
+            <el-input v-model="queryParam.code" suffix-icon="XXXX" />
           </el-form-item>
         </el-col>
 
@@ -90,7 +90,7 @@
       :modalVisible="modalVisible"
       :title="modalTitle"
       :pattern="modalPattern"
-      @updatedVisible="updatedVisible"
+      @toggleVisible="toggleVisible"
       @refresh="getData"
     />
   </el-card>
@@ -166,7 +166,7 @@ const handleAdd = () => {
 };
 
 // 模块显示
-const updatedVisible = (flag: boolean) => {
+const toggleVisible = (flag: boolean) => {
   modalVisible.value = flag;
 };
 

@@ -91,7 +91,7 @@ const userMenu = () => {
           path: "user",
           parentId: 1,
           id: 4,
-          component: "UserList",
+          component: "system/user/User",
           meta: {
             icon: "user",
             title: "用户管理",

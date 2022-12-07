@@ -22,3 +22,14 @@ export type roleType = {
   code: string;
   describe: string;
 };
+
+// 用户参数
+export type getUserType = {
+  username: string;
+  phone: string;
+  departmentId: number;
+  roleId: number;
+  status: string;
+  currentPage: number;
+  pageSize: number;
+};
