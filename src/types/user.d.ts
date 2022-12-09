@@ -1,5 +1,5 @@
 // 用户信息
-export interface UserInfoType {
+export interface UserType {
   id: string;
   name: string;
   username: string;
@@ -21,10 +21,10 @@ export interface UserInfoType {
 export interface MenuType {
   name: string;
   path: string;
-  redirect?: string;
-  parentId: number;
+  parentId: number | string;
   id: number;
   component: string;
+  redirect?: string;
   meta: MetaType;
   children?: Array<MenuType>;
 }
@@ -36,7 +36,7 @@ export interface MetaType {
   hidden: boolean;
   hideChildren?: boolean;
   affix?: boolean;
-  noCache?: string;
+  cache?: boolean;
   url?: string;
   permissionList?: string;
   internalOrExternal?: boolean;
@@ -45,7 +45,7 @@ export interface MetaType {
 // 部门信息
 export interface DepartmentType {
   parentId: number | string;
-  id: number;
+  id?: number;
   code: string;
   name: string;
   children?: Array<DepartmentType>;

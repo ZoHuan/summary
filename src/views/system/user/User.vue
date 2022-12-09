@@ -99,7 +99,7 @@
         align="center"
       >
         <template v-if="item.prop === 'gender'" #default="scope">
-          {{ genderFormat(scope.row.gender) }}
+          {{ scope.row.gender ? "男" : "女" }}
         </template>
         <template v-else-if="item.prop === 'status'" #default="scope">
           <el-tag type="success" v-if="scope.row.status">启用</el-tag>
@@ -139,10 +139,9 @@
     </div>
 
     <user-modal
-      ref="modal"
       :modalVisible="modalVisible"
-      :title="modalTitle"
-      :pattern="modalPattern"
+      :modalTitle="modalTitle"
+      :modalData="modalData"
       @toggleVisible="toggleVisible"
       @refresh="getData"
     />
@@ -150,14 +149,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import { defineComponent, onMounted, reactive, ref } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
-import { getUserList } from "@/api/system/user";
+import { getUserList } from "@/api/system/system";
 import useSystem from "@/hooks/web/useSystem";
 import type { FormInstance } from "element-plus";
-import type { roleType } from "@/api/system/types";
+import type { UserType } from "@/types/user";
 import UserModal from "./UserModal.vue";
-
 defineComponent({ name: "RoleView" });
 
 const {
@@ -188,7 +186,6 @@ const queryParam = reactive({
   currentPage: 1,
   pageSize: 10,
 });
-
 // 表头
 const columns = reactive([
   { label: "用户名", prop: "username", width: "180" },
@@ -205,19 +202,10 @@ const dataList = ref({
   userList: [],
   total: 0,
 });
-
 // 模块
-const modal = ref();
 const modalVisible = ref(false);
 const modalTitle = ref("");
-const modalPattern = ref(1);
-
-// 性别格式化
-const genderFormat = computed(() => {
-  return function (gender: number) {
-    return gender ? "男" : "女";
-  };
-});
+const modalData = ref();
 
 onMounted(() => {
   getDepartmentData();
@@ -260,8 +248,7 @@ const handleCurrentChange = (val: number) => {
 // 添加
 const handleAdd = () => {
   modalVisible.value = true;
-  modalTitle.value = "添加角色";
-  modalPattern.value = 1;
+  modalTitle.value = "添加用户";
 };
 
 // 模块显示
@@ -270,11 +257,10 @@ const toggleVisible = (flag: boolean) => {
 };
 
 // 编辑
-const handleEdit = (data: roleType) => {
+const handleEdit = (data: UserType) => {
   modalVisible.value = true;
-  modalTitle.value = "编辑角色";
-  modalPattern.value = 2;
-  modal.value?.init(data);
+  modalTitle.value = "编辑用户";
+  modalData.value = JSON.parse(JSON.stringify(data));
 };
 
 // 删除
@@ -284,7 +270,7 @@ const handleDel = () => {
     cancelButtonText: "取消",
     type: "warning",
   }).then(() => {
-    ElMessage.success("删除角色成功！");
+    ElMessage.success("删除用户成功！");
   });
 };
 </script>

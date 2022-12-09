@@ -4,13 +4,13 @@
     <el-form :model="queryParam" :inline="true" ref="queryForm">
       <el-row :gutter="48">
         <el-col :md="8" :sm="24">
-          <el-form-item label="部门名称：" prop="name">
-            <el-input v-model="queryParam.name" />
+          <el-form-item label="菜单名称：" prop="title">
+            <el-input v-model="queryParam.title" />
           </el-form-item>
         </el-col>
         <el-col :md="8" :sm="24">
-          <el-form-item label="部门编号：" prop="code">
-            <el-input v-model="queryParam.code" />
+          <el-form-item label="菜单地址：" prop="path">
+            <el-input v-model="queryParam.path" />
           </el-form-item>
         </el-col>
 
@@ -44,18 +44,42 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
+
       <el-table-column
-        v-for="item of columns"
-        :key="item.prop"
+        v-for="(item, index) of columns"
+        :key="index"
         :label="item.label"
         :prop="item.prop"
+        :fixed="item.fixed"
+        :width="item.width"
         align="center"
       >
-        <template v-if="item.prop === 'actions'" #default="scope">
+        <template v-if="item.prop === 'meta'" #default="scope">
+          <span v-if="item.meta === 'title'">
+            {{ scope.row.meta.title }}
+          </span>
+          <span v-else-if="item.meta === 'icon'">
+            <el-icon :size="16" class="menuIcon">
+              <component :is="scope.row.meta.icon" />
+            </el-icon>
+          </span>
+          <span v-else>
+            <el-tag
+              type="success"
+              effect="dark"
+              v-if="scope.row.meta[item.meta as string]"
+            >
+              是
+            </el-tag>
+            <el-tag type="danger" effect="dark" v-else>否</el-tag>
+          </span>
+        </template>
+        <template v-else-if="item.prop === 'actions'" #default="scope">
           <el-button
             type="primary"
             plain
             size="small"
+            :disabled="scope.row.disabled"
             @click="handleEdit(scope.row)"
             >编辑</el-button
           >
@@ -63,14 +87,15 @@
             type="danger"
             plain
             size="small"
-            @click="handleDel(scope.row)"
+            :disabled="scope.row.disabled"
+            @click="handleDel()"
             >删除</el-button
           >
         </template>
       </el-table-column>
     </el-table>
 
-    <department-modal
+    <menu-modal
       :modalVisible="modalVisible"
       :modalTitle="modalTitle"
       :modalData="modalData"
@@ -79,27 +104,35 @@
     />
   </el-card>
 </template>
+
 <script lang="ts" setup>
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
-import { getDepartmentList, departmentDelete } from "@/api/system/system";
+import { getMenuList } from "@/api/system/system";
 import type { FormInstance } from "element-plus";
-import type { DepartmentType } from "@/types/user";
-import DepartmentModal from "./DepartmentModal.vue";
-defineComponent({ name: "DepartmentView" });
+import type { MenuType } from "@/types/user";
+import MenuModal from "./MenuModal.vue";
+defineComponent({ name: "MenuView" });
 
 // 查询表单
 const queryForm = ref<FormInstance>();
 // 查询参数
 const queryParam = reactive({
-  name: "",
-  code: "",
+  title: "",
+  path: "",
 });
 // 表头
 const columns = reactive([
-  { label: "部门名称", prop: "name" },
-  { label: "部门编号", prop: "code" },
-  { label: "操作", prop: "actions" },
+  { label: "菜单名称", prop: "meta", meta: "title", width: "180" },
+  { label: "菜单编号", prop: "name", width: "140" },
+  { label: "菜单地址", prop: "path", width: "180" },
+  { label: "菜单页面路径", prop: "component", width: "280" },
+  { label: "重定向页面", prop: "redirect", width: "280" },
+  { label: "图标", prop: "meta", meta: "icon", width: "100" },
+  { label: "是否隐藏", prop: "meta", meta: "hidden", width: "100" },
+  { label: "是否固定", prop: "meta", meta: "affix", width: "100" },
+  { label: "是否缓存", prop: "meta", meta: "cache", width: "100" },
+  { label: "操作", prop: "actions", width: "140", fixed: "right" },
 ]);
 // 数据
 const dataList = ref();
@@ -114,7 +147,7 @@ onMounted(() => {
 
 // 获取数据
 const getData = () => {
-  getDepartmentList(queryParam).then((res) => {
+  getMenuList(queryParam).then((res) => {
     dataList.value = res.data.result;
   });
 };
@@ -132,7 +165,7 @@ const searchReset = () => {
 // 添加
 const handleAdd = () => {
   modalVisible.value = true;
-  modalTitle.value = "添加部门";
+  modalTitle.value = "添加菜单";
 };
 
 // 模块显示
@@ -141,24 +174,26 @@ const toggleVisible = (flag: boolean) => {
 };
 
 // 编辑
-const handleEdit = (data: DepartmentType) => {
+const handleEdit = (data: MenuType) => {
   modalVisible.value = true;
-  modalTitle.value = "编辑部门";
+  modalTitle.value = "编辑菜单";
   modalData.value = JSON.parse(JSON.stringify(data));
-
 };
 
 // 删除
-const handleDel = (data: DepartmentType) => {
+const handleDel = () => {
   ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     type: "warning",
   }).then(() => {
-    return departmentDelete(data).then((res) => {
-      ElMessage.success(res.data.message);
-      getData();
-    });
+    ElMessage.success("删除菜单成功！");
   });
 };
 </script>
+
+<style lang="less" scoped>
+.menuIcon {
+  color: var(--el-color-primary);
+}
+</style>

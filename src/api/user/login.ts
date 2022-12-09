@@ -8,7 +8,6 @@ const userApi = {
   Register: "/auth/register",
   SendSms: "/account/sms",
   UserInfo: "/user/info",
-  UserMenu: "/user/menu",
 };
 
 /**
@@ -46,13 +45,6 @@ export function getUserInfo() {
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
     },
-  });
-}
-
-export function getUserMenu() {
-  return request({
-    url: userApi.UserMenu,
-    method: "get",
   });
 }
 

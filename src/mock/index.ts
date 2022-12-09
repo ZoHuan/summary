@@ -11,7 +11,7 @@ if (
   require("./system/department");
   require("./system/role");
   require("./system/user");
-  // require("./services/article");
+  require("./system/menu");
 
   Mock.setup({
     timeout: 800, // setter delay time

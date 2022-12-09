@@ -16,6 +16,6 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 const keepAlive = computed(() => {
-  return route.meta.noCache;
+  return route.meta.cache;
 });
 </script>

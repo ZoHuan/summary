@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="visible"
-    :title="title"
+    :title="modalTitle"
     width="38%"
     draggable
     :close-on-click-modal="false"
@@ -37,12 +37,13 @@
             :data="departmentList"
             :props="departmentProps"
             :render-after-expand="false"
+            clearable
             check-strictly
             placeholder="请选择部门"
           />
         </el-form-item>
         <el-form-item label="所属角色" prop="roleId">
-          <el-select v-model="form.roleId" placeholder="请选择角色">
+          <el-select v-model="form.roleId" clearable placeholder="请选择角色">
             <el-option
               v-for="item in roleList"
               :key="item.id"
@@ -66,18 +67,18 @@
       </el-form>
     </div>
     <template #footer>
-      <el-button @click="cancel(formRef)">取消</el-button>
+      <el-button @click="cancel()">取消</el-button>
       <el-button @click="confirm(formRef)" type="primary">确定</el-button>
     </template>
   </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import useSystem from "@/hooks/web/useSystem";
 import type { FormInstance, FormRules } from "element-plus";
-import type { roleType } from "@/api/system/types";
+import type { UserType } from "@/types/user";
 
 const {
   departmentProps,
@@ -89,8 +90,8 @@ const {
 
 const props = defineProps<{
   modalVisible: boolean;
-  title: string;
-  pattern: number;
+  modalTitle: string;
+  modalData?: UserType;
 }>();
 
 const formRef = ref<FormInstance>();
@@ -109,15 +110,11 @@ const rules = reactive<FormRules>({
   phone: [{ required: true, message: "请输入手机号码！", trigger: "blur" }],
   email: [{ required: true, message: "请输入邮箱地址！", trigger: "blur" }],
   departmentId: [
-    { required: true, message: "请输入所属部门！", trigger: "blur" },
+    { required: true, message: "请选择所属部门！", trigger: "blur" },
   ],
-  roleId: [{ required: true, message: "请输入所属角色！", trigger: "blur" }],
+  roleId: [{ required: true, message: "请选择所属角色！", trigger: "blur" }],
 });
-
-onMounted(() => {
-  getDepartmentData();
-  getRoleData();
-});
+const pattern = ref(1);
 
 // 模块显示/隐藏
 const emit = defineEmits(["toggleVisible", "refresh"]);
@@ -126,44 +123,48 @@ const visible = computed({
     return props.modalVisible;
   },
   set() {
-    formRef.value?.resetFields();
-    emit("toggleVisible", false);
+    cancel();
   },
 });
 
-// 初始化
-const init = (data: roleType) => {
-  console.log(data);
+watch(
+  () => props.modalData,
+  (newVal) => {
+    nextTick(() => {
+      pattern.value = 2;
+      Object.assign(form, newVal);
+    });
+  }
+);
 
-  Object.assign(form, data);
-};
+onMounted(() => {
+  getDepartmentData();
+  getRoleData();
+});
 
 // 取消
-const cancel = (formEl: FormInstance | undefined) => {
-  formEl && formEl.resetFields();
+const cancel = () => {
+  formRef.value?.resetFields();
+  pattern.value = 1;
   emit("toggleVisible", false);
 };
 
 // 确定
 const confirm = (formEl: FormInstance | undefined) => {
-  formEl &&
-    formEl.validate((valid) => {
-      if (valid) {
-        if (props.pattern === 1) {
-          ElMessage.success("添加角色成功！");
-          emit("toggleVisible", false);
-          emit("refresh");
-        } else {
-          ElMessage.success("编辑角色成功！");
-          formEl.resetFields();
-          emit("toggleVisible", false);
-          emit("refresh");
-        }
+  formEl?.validate((valid) => {
+    if (valid) {
+      if (pattern.value === 1) {
+        ElMessage.success("添加用户成功！");
+        formEl.resetFields();
+        emit("toggleVisible", false);
+        emit("refresh");
+      } else {
+        ElMessage.success("编辑用户成功！");
+        formEl.resetFields();
+        emit("toggleVisible", false);
+        emit("refresh");
       }
-    });
+    }
+  });
 };
-
-defineExpose({
-  init,
-});
 </script>

@@ -1,5 +1,4 @@
 import type { DepartmentType } from "@/types/user";
-import type { departmentType } from "@/api/system/types";
 
 export const decide = {
   isArray: function isArray(obj: Array<unknown>) {
@@ -86,14 +85,14 @@ export const queryNode = <T extends Record<string, unknown>>(
 export const insertNode = (
   tree: Array<DepartmentType>,
   nodeKey: string,
-  nodeValue: departmentType
+  nodeValue: DepartmentType
 ) => {
   const forFn = (arr: Array<DepartmentType>) => {
     for (let i = 0; i < arr.length; i++) {
       if (arr[i][nodeKey as keyof DepartmentType] === nodeValue.parentId) {
         arr[i].children ? "" : (arr[i].children = []);
         arr[i].children?.push({
-          parentId: arr[i].id,
+          parentId: arr[i].id as number,
           id: parseInt("" + arr[i].id + (arr[i].children?.length as number)),
           code: nodeValue.code,
           name: nodeValue.name,
@@ -117,9 +116,9 @@ export const insertNode = (
 export const updateNode = (
   tree: Array<DepartmentType>,
   nodeKey: string,
-  nodeValue: departmentType
+  nodeValue: DepartmentType
 ) => {
-  deleteNode(tree, "code", nodeValue);
+  deleteNode(tree, "id", nodeValue);
   if (nodeValue.parentId) {
     insertNode(tree, nodeKey, nodeValue);
   } else {
@@ -141,11 +140,14 @@ export const updateNode = (
 export const deleteNode = (
   tree: Array<DepartmentType>,
   nodeKey: string,
-  nodeValue: departmentType
+  nodeValue: DepartmentType
 ) => {
   const forFn = (arr: Array<DepartmentType>) => {
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i][nodeKey as keyof DepartmentType] === nodeValue.code) {
+      if (
+        arr[i][nodeKey as keyof DepartmentType] ===
+        nodeValue[nodeKey as keyof DepartmentType]
+      ) {
         arr.splice(i, 1);
       } else {
         if (arr[i].children && arr[i].children?.length != 0) {

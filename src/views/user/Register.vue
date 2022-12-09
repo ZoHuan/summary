@@ -198,10 +198,6 @@ const handlePhoneCheck = (
   value: string,
   callback: (error?: string | Error | undefined) => void
 ) => {
-  // console.log("handlePhoneCheck, rule:", rule);
-  // console.log("handlePhoneCheck, value", value);
-  // console.log("handlePhoneCheck, callback", callback);
-
   callback();
 };
 

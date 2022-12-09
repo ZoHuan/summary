@@ -86,10 +86,9 @@
     </el-table>
 
     <role-modal
-      ref="modal"
       :modalVisible="modalVisible"
-      :title="modalTitle"
-      :pattern="modalPattern"
+      :modalTitle="modalTitle"
+      :modalData="modalData"
       @toggleVisible="toggleVisible"
       @refresh="getData"
     />
@@ -99,11 +98,10 @@
 <script lang="ts" setup>
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
+import { getRoleList } from "@/api/system/system";
 import type { FormInstance } from "element-plus";
-import type { roleType } from "@/api/system/types";
+import type { RoleType } from "@/types/user";
 import RoleModal from "./RoleModal.vue";
-import { getRoleList } from "@/api/system/role";
-
 defineComponent({ name: "RoleView" });
 
 // 查询表单
@@ -127,10 +125,9 @@ const columns = reactive([
 // 数据
 const dataList = ref();
 // 模块
-const modal = ref();
 const modalVisible = ref(false);
 const modalTitle = ref("");
-const modalPattern = ref(1);
+const modalData = ref();
 
 onMounted(() => {
   getData();
@@ -162,7 +159,6 @@ const toggleAdvanced = () => {
 const handleAdd = () => {
   modalVisible.value = true;
   modalTitle.value = "添加角色";
-  modalPattern.value = 1;
 };
 
 // 模块显示
@@ -171,11 +167,10 @@ const toggleVisible = (flag: boolean) => {
 };
 
 // 编辑
-const handleEdit = (data: roleType) => {
+const handleEdit = (data: RoleType) => {
   modalVisible.value = true;
   modalTitle.value = "编辑角色";
-  modalPattern.value = 2;
-  modal.value?.init(data);
+  modalData.value = JSON.parse(JSON.stringify(data));
 };
 
 // 删除

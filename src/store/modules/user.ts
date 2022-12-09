@@ -1,11 +1,7 @@
 import { defineStore } from "pinia";
 import { useCache } from "@/hooks/web/useCache";
-import {
-  loginAPi,
-  getUserInfo,
-  getUserMenu,
-  logoutAPi,
-} from "@/api/user/login";
+import { loginAPi, getUserInfo, logoutAPi } from "@/api/user/login";
+import { getMenuList } from "@/api/system/system";
 import type { LoginType } from "@/api/user/types";
 import type { MenuType } from "@/types/user";
 import { ACCESS_TOKEN } from "../mutation-types";
@@ -105,7 +101,7 @@ export const userStore = defineStore({
 
     getMenu() {
       return new Promise((resolve, reject) => {
-        getUserMenu()
+        getMenuList()
           .then((response) => {
             const result = response.data.result;
             this.menuList = result;

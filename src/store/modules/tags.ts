@@ -38,7 +38,7 @@ export const tagsStore = defineStore({
     // 新增缓存
     addCachedView(view: RouteLocationNormalizedLoaded) {
       if (this.cachedViews.includes(view.name as string)) return;
-      if (!view.meta.noCache) {
+      if (!view.meta.cache) {
         this.cachedViews.push(view.name as string);
       }
     },
