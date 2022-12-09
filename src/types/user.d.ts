@@ -60,7 +60,7 @@ export interface RoleType {
   creatorId: string;
   createTime: number;
   deleted: number;
-  permissions: Array<PermissionsType>;
+  permissions: Array<number>;
 }
 
 // 权限信息

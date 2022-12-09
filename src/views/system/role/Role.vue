@@ -62,6 +62,8 @@
         :key="item.prop"
         :label="item.label"
         :prop="item.prop"
+        :fixed="item.fixed"
+        :width="item.width"
         align="center"
       >
         <template v-if="item.prop === 'actions'" #default="scope">
@@ -81,6 +83,14 @@
             @click="scope.row.disabled || handleDel()"
             >删除</el-button
           >
+          <el-button
+            type="warning"
+            plain
+            size="small"
+            @click="handlePermissions(scope.row)"
+          >
+            菜单权限
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,6 +102,13 @@
       @toggleVisible="toggleVisible"
       @refresh="getData"
     />
+
+    <!-- 菜单权限 -->
+    <permissions-modal
+      :modalVisible="permissionsVisible"
+      :modalData="permissionsData"
+      @toggleVisible="togglePermissionsVisible"
+    />
   </el-card>
 </template>
 
@@ -102,6 +119,7 @@ import { getRoleList } from "@/api/system/system";
 import type { FormInstance } from "element-plus";
 import type { RoleType } from "@/types/user";
 import RoleModal from "./RoleModal.vue";
+import PermissionsModal from "./PermissionsModal.vue";
 defineComponent({ name: "RoleView" });
 
 // 查询表单
@@ -116,11 +134,11 @@ const queryParam = reactive({
 });
 // 表头
 const columns = reactive([
-  { label: "角色名称", prop: "name" },
-  { label: "角色编号", prop: "code" },
-  { label: "角色描述", prop: "describe" },
-  { label: "创建时间", prop: "date" },
-  { label: "操作", prop: "actions" },
+  { label: "角色名称", prop: "name", width: "140" },
+  { label: "角色编号", prop: "code", width: "140" },
+  { label: "角色描述", prop: "describe", width: "180" },
+  { label: "创建时间", prop: "date", width: "120" },
+  { label: "操作", prop: "actions", width: "230", fixed: "right" },
 ]);
 // 数据
 const dataList = ref();
@@ -128,6 +146,9 @@ const dataList = ref();
 const modalVisible = ref(false);
 const modalTitle = ref("");
 const modalData = ref();
+// 菜单权限
+const permissionsVisible = ref(false);
+const permissionsData = ref();
 
 onMounted(() => {
   getData();
@@ -182,5 +203,16 @@ const handleDel = () => {
   }).then(() => {
     ElMessage.success("删除角色成功！");
   });
+};
+
+// 菜单权限
+const handlePermissions = (data: RoleType) => {
+  permissionsVisible.value = true;
+  permissionsData.value = JSON.parse(JSON.stringify(data.permissions));
+};
+
+// 菜单权限模块显示
+const togglePermissionsVisible = (flag: boolean) => {
+  permissionsVisible.value = flag;
 };
 </script>
