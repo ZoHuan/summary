@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-row class="login">
-      <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10" class="login-left">
+      <el-col :xs="24" :sm="10" class="login-left">
         <div class="login-form">
           <h1>用户注册</h1>
           <el-form ref="registerRef" :model="registerForm" :rules="loginRules">

@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "712342",
+      "name": "柱状图",
+      "font_class": "columnar",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "4354248",
+      "name": "图表-折线图",
+      "font_class": "line",
+      "unicode": "eb96",
+      "unicode_decimal": 60310
+    },
+    {
+      "icon_id": "4550364",
+      "name": "信息",
+      "font_class": "information",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "6756283",
+      "name": "团队",
+      "font_class": "team",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "9673155",
+      "name": "动态",
+      "font_class": "dynamic",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "24993766",
+      "name": "综合经济指数",
+      "font_class": "index",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "551445",
       "name": "考勤签到",
       "font_class": "address",

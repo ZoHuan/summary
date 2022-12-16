@@ -22,7 +22,7 @@ const list = () => {
           path: "workplace",
           parentId: 1,
           id: 11,
-          component: "home/Workplace",
+          component: "home/workplace/Workplace",
           meta: {
             icon: "Odometer",
             title: "工作台",

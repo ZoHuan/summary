@@ -68,7 +68,7 @@
               <template #label>
                 <div class="tabs-label">技术</div>
               </template>
-              <technology-page></technology-page>
+              <technology-page />
             </el-tab-pane>
           </el-tabs>
         </el-card>
@@ -170,9 +170,9 @@ const teams = [
 
       i {
         position: absolute;
-        top: -1px;
+        top: 1px;
         left: 2px;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
 
