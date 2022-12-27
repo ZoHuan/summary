@@ -21,7 +21,7 @@ import {
 const app = appStore(pinia);
 const { storage } = useCache();
 
-export default function () {
+(function () {
   const isMobil = navigator.userAgent.match(
     /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
   );
@@ -42,4 +42,4 @@ export default function () {
   app.weak = storage.get(TOGGLE_WEAK) || defaultSettings.weak;
 
   updateTheme(app.color);
-}
+})();

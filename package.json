@@ -20,7 +20,8 @@
     "path-browserify": "^1.0.1",
     "pinia": "^2.0.17",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue3-seamless-scroll": "^2.0.1"
   },
   "devDependencies": {
     "@types/js-md5": "^0.4.3",

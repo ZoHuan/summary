@@ -30,6 +30,18 @@ const list = () => {
             affix: true,
           },
         },
+        {
+          name: "Kanban",
+          path: "kanban",
+          parentId: 1,
+          id: 12,
+          component: "home/kanban/Kanban",
+          meta: {
+            icon: "DataAnalysis",
+            title: "看板",
+            hidden: false,
+          },
+        },
       ],
     },
     {
