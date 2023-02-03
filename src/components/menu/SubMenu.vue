@@ -38,6 +38,11 @@ const jumpRoute = (menu: MenuType) => {
   if (menu.component === "layouts/RouteView") {
     app.toggleTopMenu(menu.name);
   } else {
+    if (menu.meta.internalOrExternal) {
+      window.open(menu.meta.url, "_blank");
+      return;
+    }
+
     router.push({ name: menu.name });
   }
 };

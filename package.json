@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "@amap/amap-jsapi-types": "0.0.10",
     "@element-plus/icons-vue": "^2.0.9",
     "@types/echarts": "^4.9.16",
     "@vueuse/core": "^9.4.0",

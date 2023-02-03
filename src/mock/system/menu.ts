@@ -3,7 +3,6 @@ import { builder } from "../util";
 
 const list = () => {
   const menuList = [
-    // dashboard
     {
       name: "Home",
       path: "/home",
@@ -45,10 +44,51 @@ const list = () => {
       ],
     },
     {
+      name: "Map",
+      path: "/map",
+      parentId: "",
+      id: 2,
+      component: "layouts/RouteView",
+      redirect: "/map/amap",
+      meta: {
+        icon: "MapLocation",
+        title: "地图",
+        hidden: false,
+      },
+      children: [
+        {
+          name: "AMAP",
+          path: "amap",
+          parentId: 2,
+          id: 21,
+          component: "map/amap/AMAP",
+          meta: {
+            icon: "LocationInformation",
+            title: "高德地图",
+            hidden: false,
+          },
+        },
+        {
+          name: "3DMap",
+          path: "3DMap",
+          parentId: 2,
+          id: 22,
+          component: "map/3DMap/3DMap",
+          meta: {
+            icon: "Guide",
+            title: "3D地图",
+            url: "/view/3DMap",
+            hidden: false,
+            internalOrExternal: true,
+          },
+        },
+      ],
+    },
+    {
       name: "System",
       path: "/system",
       parentId: "",
-      id: 2,
+      id: 3,
       component: "layouts/RouteView",
       redirect: "/system/department",
       meta: {
@@ -60,8 +100,8 @@ const list = () => {
         {
           name: "Department",
           path: "department",
-          parentId: 2,
-          id: 21,
+          parentId: 3,
+          id: 31,
           component: "system/department/Department",
           meta: {
             icon: "Notification",
@@ -72,8 +112,8 @@ const list = () => {
         {
           name: "Role",
           path: "role",
-          parentId: 2,
-          id: 22,
+          parentId: 3,
+          id: 32,
           component: "system/role/Role",
           meta: {
             icon: "Connection",
@@ -84,8 +124,8 @@ const list = () => {
         {
           name: "User",
           path: "user",
-          parentId: 2,
-          id: 23,
+          parentId: 3,
+          id: 33,
           component: "system/user/User",
           meta: {
             icon: "Avatar",
@@ -96,8 +136,8 @@ const list = () => {
         {
           name: "Menu",
           path: "menu",
-          parentId: 2,
-          id: 24,
+          parentId: 3,
+          id: 34,
           component: "system/menu/Menu",
           meta: {
             icon: "Menu",
@@ -111,7 +151,7 @@ const list = () => {
       name: "Account",
       path: "/account",
       parentId: "",
-      id: 3,
+      id: 4,
       component: "layouts/RouteView",
       redirect: "/account/center",
       meta: {
@@ -123,8 +163,8 @@ const list = () => {
         {
           name: "Center",
           path: "center",
-          parentId: 3,
-          id: 31,
+          parentId: 4,
+          id: 41,
           component: "account/center/Center",
           meta: {
             icon: "Postcard",
@@ -135,8 +175,8 @@ const list = () => {
         {
           name: "Settings",
           path: "settings",
-          parentId: 3,
-          id: 32,
+          parentId: 4,
+          id: 42,
           component: "account/settings/Settings",
           redirect: "/account/settings/basic",
           meta: {
@@ -149,8 +189,8 @@ const list = () => {
             {
               name: "BasicSettings",
               path: "basic",
-              parentId: 32,
-              id: 321,
+              parentId: 42,
+              id: 421,
               component: "account/settings/BasicSetting",
               meta: {
                 title: "基本设置",
@@ -160,8 +200,8 @@ const list = () => {
             {
               name: "SecuritySettings",
               path: "security",
-              parentId: 32,
-              id: 322,
+              parentId: 42,
+              id: 422,
               component: "account/settings/SecuritySettings",
               meta: {
                 title: "安全设置",

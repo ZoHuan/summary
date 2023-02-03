@@ -9,7 +9,6 @@ export const constantRouterMap: Array<RouteRecordRaw> = [
     path: "/user",
     component: BlankLayout,
     redirect: "/user/login",
-    meta: { hidden: true },
     children: [
       {
         path: "login",
@@ -29,6 +28,19 @@ export const constantRouterMap: Array<RouteRecordRaw> = [
         component: () =>
           import(
             /* webpackChunkName: "user" */ "@/views/user/RegisterResult.vue"
+          ),
+      },
+    ],
+  },
+  {
+    path: "/view",
+    component: BlankLayout,
+    children: [
+      {
+        path: "3DMap",
+        component: () =>
+          import(
+            /* webpackChunkName: "3DMap" */ "@/views/map/3DMap/3DMap.vue"
           ),
       },
     ],
