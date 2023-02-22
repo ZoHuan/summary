@@ -47,6 +47,7 @@ function generateChildRouters(menuList: Array<MenuType>) {
       redirect: item.redirect,
       component: () => import(`@/${component}.vue`),
       meta: { ...item.meta },
+      children:[]
     };
 
     if (item.children && item.children.length > 0) {

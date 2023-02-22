@@ -33,19 +33,6 @@ export const constantRouterMap: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: "/view",
-    component: BlankLayout,
-    children: [
-      {
-        path: "3DMap",
-        component: () =>
-          import(
-            /* webpackChunkName: "3DMap" */ "@/views/map/3DMap/3DMap.vue"
-          ),
-      },
-    ],
-  },
-  {
     path: "/redirect",
     component: BasicLayout,
     children: [

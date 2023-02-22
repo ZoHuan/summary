@@ -73,11 +73,11 @@ const list = () => {
           path: "3DMap",
           parentId: 2,
           id: 22,
-          component: "map/3DMap/3DMap",
+          component: "layouts/BlankLayout",
           meta: {
             icon: "Guide",
             title: "3D地图",
-            url: "/view/3DMap",
+            url: "https://zohuan.github.io/Cesium/index",
             hidden: false,
             internalOrExternal: true,
           },

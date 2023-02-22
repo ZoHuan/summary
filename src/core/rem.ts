@@ -13,7 +13,7 @@
 
   // 防抖
   function debounce(fn: () => void, wait: number) {
-    let timeout: NodeJS.Timeout | null = null;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
     return function () {
       if (timeout !== null) clearTimeout(timeout);
       timeout = setTimeout(fn, wait);

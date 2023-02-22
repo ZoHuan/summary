@@ -26,5 +26,5 @@ app
   .use(router)
   .use(pinia)
   .use(ElementPlus, { locale: zhCn })
-  .use(SeamlessScroll)
+  .use(SeamlessScroll, { name: "SeamlessScroll" })
   .mount("#app");
