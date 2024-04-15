@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d dist -r https://github.com/ZoHuan/summary.git -b gh-pages"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
