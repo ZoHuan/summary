@@ -1,7 +1,7 @@
 const { defineConfig } = require("@vue/cli-service");
 
 module.exports = defineConfig({
-	publicPath: process.env.NODE_ENV === "production" ? "/user" : "/",
+	publicPath: "/user",
 	transpileDependencies: true,
 	configureWebpack: {
 		resolve: {
