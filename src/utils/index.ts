@@ -25,7 +25,7 @@ export const decide = {
     return JSON.stringify(o) === "{}";
   },
 
-  isEmptyArray: function emptyArray(o: Array<unknown>) {
+  isEmptyArray: function isEmptyArray(o: Array<unknown>) {
     return JSON.stringify(o) === "[]";
   },
 };

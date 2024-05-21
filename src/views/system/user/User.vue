@@ -188,7 +188,7 @@ const queryParam = reactive({
 });
 // 表头
 const columns = reactive([
-  { label: "用户名", prop: "username", width: "180" },
+  { label: "用户名", prop: "name", width: "180" },
   { label: "手机号", prop: "phone", width: "140" },
   { label: "邮箱", prop: "email", width: "240" },
   { label: "性别", prop: "gender", width: "90" },
