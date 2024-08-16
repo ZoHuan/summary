@@ -25,6 +25,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app
 	.use(router)
 	.use(pinia)
-	.use(ElementPlus, { locale: zhCn })
+	.use(ElementPlus)
 	.use(SeamlessScroll, { name: "SeamlessScroll" })
 	.mount("#app");
